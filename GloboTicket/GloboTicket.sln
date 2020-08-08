@@ -13,15 +13,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Shoppi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.EventCatalog", "GloboTicket.Services.EventCatalog\GloboTicket.Services.EventCatalog.csproj", "{E2C27A67-A664-4501-8045-C71F13924979}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Services.Marketing", "GloboTicket.Services.Marketing\GloboTicket.Services.Marketing.csproj", "{D230B20E-4C90-4BC4-A3FE-0B1AB7D02380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Marketing", "GloboTicket.Services.Marketing\GloboTicket.Services.Marketing.csproj", "{D230B20E-4C90-4BC4-A3FE-0B1AB7D02380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Services.Discount", "GloboTicket.Services.Discount\GloboTicket.Services.Discount.csproj", "{CBD08DF7-C1FA-4670-A265-827259E45867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Discount", "GloboTicket.Services.Discount\GloboTicket.Services.Discount.csproj", "{CBD08DF7-C1FA-4670-A265-827259E45867}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Services.Order", "GloboTicket.Services.Order\GloboTicket.Services.Order.csproj", "{A36462E2-CD8A-4D63-BC2D-E4CDB3313A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Order", "GloboTicket.Services.Order\GloboTicket.Services.Order.csproj", "{A36462E2-CD8A-4D63-BC2D-E4CDB3313A7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Services.PaymentWorker", "GloboTicket.Services.PaymentWorker\GloboTicket.Services.PaymentWorker.csproj", "{45B65B6B-B48C-457A-83EC-D53DA4972864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.PaymentWorker", "GloboTicket.Services.PaymentWorker\GloboTicket.Services.PaymentWorker.csproj", "{45B65B6B-B48C-457A-83EC-D53DA4972864}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fake", "Fake", "{BEE0F382-1476-489A-9ACA-B4D969B45BDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{8BC3B285-5AD7-49A5-AE12-6903C029FEC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Integration.MessagingBus", "GloboTicket.Integration.MessagingBus\GloboTicket.Integration.MessagingBus.csproj", "{532539E3-8124-49E1-BDAE-8931A42BF7D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Integration.Messages", "GloboTicket.Integration.Messages\GloboTicket.Integration.Messages.csproj", "{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,14 @@ Global
 		{45B65B6B-B48C-457A-83EC-D53DA4972864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45B65B6B-B48C-457A-83EC-D53DA4972864}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45B65B6B-B48C-457A-83EC-D53DA4972864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532539E3-8124-49E1-BDAE-8931A42BF7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532539E3-8124-49E1-BDAE-8931A42BF7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532539E3-8124-49E1-BDAE-8931A42BF7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532539E3-8124-49E1-BDAE-8931A42BF7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +83,8 @@ Global
 		{CBD08DF7-C1FA-4670-A265-827259E45867} = {F3632F51-056C-43C5-9E59-8D371E99C8BF}
 		{A36462E2-CD8A-4D63-BC2D-E4CDB3313A7C} = {F3632F51-056C-43C5-9E59-8D371E99C8BF}
 		{45B65B6B-B48C-457A-83EC-D53DA4972864} = {F3632F51-056C-43C5-9E59-8D371E99C8BF}
+		{532539E3-8124-49E1-BDAE-8931A42BF7D6} = {8BC3B285-5AD7-49A5-AE12-6903C029FEC5}
+		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC} = {8BC3B285-5AD7-49A5-AE12-6903C029FEC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E1B7AE-99E6-4F8F-977C-CF0FD36BBE42}

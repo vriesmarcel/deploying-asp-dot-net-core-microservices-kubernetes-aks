@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.ShoppingBasket.DbContexts;
 using GloboTicket.Services.ShoppingBasket.Repositories;
 using GloboTicket.Services.ShoppingBasket.Services;
@@ -32,6 +33,9 @@ namespace GloboTicket.Services.ShoppingBasket
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IBasketLinesRepository, BasketLinesRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
+
             services.AddHttpClient<IEventCatalogService, EventCatalogService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiConfigs:EventCatalog:Uri"]));
 
