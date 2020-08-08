@@ -28,9 +28,12 @@ namespace GloboTicket.Web.Controllers
 
             var getBasket = currentBasketId == Guid.Empty ? Task.FromResult<Basket>(null) :
                 shoppingBasketService.GetBasket(currentBasketId);
+
             var getCategories = eventCatalogService.GetCategories();
+
             var getEvents = categoryId == Guid.Empty ? eventCatalogService.GetAll() :
                 eventCatalogService.GetByCategoryId(categoryId);
+
             await Task.WhenAll(new Task[] { getBasket, getCategories, getEvents });
 
             var numberOfItems = getBasket.Result == null ? 0 : getBasket.Result.NumberOfItems;

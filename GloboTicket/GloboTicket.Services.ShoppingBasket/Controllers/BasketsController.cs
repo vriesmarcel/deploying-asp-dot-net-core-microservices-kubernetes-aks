@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using GloboTicket.Services.ShoppingBasket.Models;
@@ -50,6 +51,20 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
                 "GetBasket",
                 new { basketId = basketEntity.BasketId },
                 basketToReturn);
+        }
+
+        [HttpPost("checkout")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CheckoutBasketAsync([FromBody] BasketCheckout basketCheckout)
+        {
+            //based on basket checkout, fetch the basket lines from repo
+
+
+            //post on service bus
+
+
+            return Accepted();
         }
     }
 }
