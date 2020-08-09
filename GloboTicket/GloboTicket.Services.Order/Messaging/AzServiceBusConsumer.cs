@@ -35,7 +35,6 @@ namespace GloboTicket.Services.Ordering.Messaging
             _configuration = configuration;
             _orderRepository = orderRepository;
             // _logger = logger;
-            //_orderRepository = orderRepository;
             _messageBus = messageBus;
 
             var serviceBusConnectionString = configuration.GetValue<string>("ServiceBusConnectionString");
@@ -57,14 +56,11 @@ namespace GloboTicket.Services.Ordering.Messaging
 
         private async Task OnOrderPaymentUpdateReceived(Message message, CancellationToken arg2)
         {
-
             var body = Encoding.UTF8.GetString(message.Body);//json from service bus
             OrderPaymentUpdateMessage orderPaymentUpdateMessage =
                 JsonConvert.DeserializeObject<OrderPaymentUpdateMessage>(body);
 
-            var order = await _orderRepository.GetOrderById(orderPaymentUpdateMessage.OrderId);
-            order.OrderPaid = orderPaymentUpdateMessage.PaymentSuccess;
-            await _orderRepository.SaveChanges();
+            await _orderRepository.UpdateOrderPaymentStatus(orderPaymentUpdateMessage.OrderId, orderPaymentUpdateMessage.PaymentSuccess);
         }
 
         private async Task OnCheckoutMessageReceived(Message message, CancellationToken arg2)

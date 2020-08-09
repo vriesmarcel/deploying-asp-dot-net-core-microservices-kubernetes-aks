@@ -12,6 +12,7 @@ namespace GloboTicket.Services.Ordering.Repositories
         Task AddOrder(Order order);
         Task<Order> GetOrderById(Guid orderId);
 
-        Task<bool> SaveChanges();
+        Task UpdateOrderPaymentStatus(Guid orderId, bool paid);
+
     }
 }

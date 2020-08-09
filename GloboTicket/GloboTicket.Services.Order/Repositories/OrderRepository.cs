@@ -40,11 +40,13 @@ namespace GloboTicket.Services.Ordering.Repositories
             }
         }
 
-        public async Task<bool> SaveChanges()
+        public async Task UpdateOrderPaymentStatus(Guid orderId, bool paid)
         {
             using (var _orderDbContext = new OrderDbContext(_dbContextOptions))
             {
-                return (await _orderDbContext.SaveChangesAsync() > 0);
+                var order = await _orderDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefaultAsync();
+                order.OrderPaid = paid;
+                await _orderDbContext.SaveChangesAsync();
             }
         }
     }

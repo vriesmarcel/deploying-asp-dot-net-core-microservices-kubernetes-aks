@@ -72,6 +72,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
 
             BasketCheckoutMessage basketCheckoutMessage = _mapper.Map<BasketCheckoutMessage>(basketCheckout);
             basketCheckoutMessage.BasketLines = new List<BasketLineMessage>();
+            int total = 0;
 
             foreach (var b in basket.BasketLines)
             {
@@ -80,8 +81,12 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
                     BasketLineId = b.BasketLineId, Price = b.Price, TicketAmount = b.TicketAmount
                 };
 
+                total += b.Price * b.TicketAmount;
+
                 basketCheckoutMessage.BasketLines.Add(basketLineMessage);
             }
+
+            basketCheckoutMessage.BasketTotal = total;
 
             try
             {
