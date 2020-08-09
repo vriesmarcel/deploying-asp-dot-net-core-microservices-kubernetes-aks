@@ -18,7 +18,7 @@ namespace GloboTicket.Services.PaymentWorker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<Worker>();
+                    //services.AddHostedService<Worker>();
                 });
     }
 }

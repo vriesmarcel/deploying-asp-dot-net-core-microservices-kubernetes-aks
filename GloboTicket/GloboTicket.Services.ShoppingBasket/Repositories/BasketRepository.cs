@@ -29,6 +29,13 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
                 .AnyAsync(b => b.BasketId == basketId);
         }
 
+        public async Task ClearBasket(Guid basketId)
+        {
+            var basketLinesToClear = _shoppingBasketDbContext.BasketLines.Where(b => b.BasketId == basketId);
+            _shoppingBasketDbContext.BasketLines.RemoveRange(basketLinesToClear);
+            await SaveChanges();
+        }
+
         public void AddBasket(Basket basket)
         {
             _shoppingBasketDbContext.Baskets.Add(basket);

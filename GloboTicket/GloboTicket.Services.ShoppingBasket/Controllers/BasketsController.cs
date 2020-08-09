@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -62,24 +63,37 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         public async Task<IActionResult> CheckoutBasketAsync([FromBody] BasketCheckout basketCheckout)
         {
             //based on basket checkout, fetch the basket lines from repo
-            var basket = _basketRepository.GetBasketById(basketCheckout.BasketId);
-
-            //TODO: remove current basket items and/or basket
+            var basket = await _basketRepository.GetBasketById(basketCheckout.BasketId);
 
             if (basket == null)
             {
                 return BadRequest();
             }
 
-            BasketCheckoutMessage basketCheckoutMessage = new BasketCheckoutMessage
+            BasketCheckoutMessage basketCheckoutMessage = _mapper.Map<BasketCheckoutMessage>(basketCheckout);
+            basketCheckoutMessage.BasketLines = new List<BasketLineMessage>();
+
+            foreach (var b in basket.BasketLines)
             {
-                BasketId = basketCheckout.BasketId, FirstName = basketCheckout.FirstName
-            };
+                var basketLineMessage = new BasketLineMessage
+                {
+                    BasketLineId = b.BasketLineId, Price = b.Price, TicketAmount = b.TicketAmount
+                };
 
-            await _messageBus.PublishMessage(basketCheckoutMessage, "checkoutmessage");
+                basketCheckoutMessage.BasketLines.Add(basketLineMessage);
+            }
 
-            //TODO: remove items from basket
+            try
+            {
+                await _messageBus.PublishMessage(basketCheckoutMessage, "checkoutmessage");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
+            await _basketRepository.ClearBasket(basketCheckout.BasketId);
             return Accepted();
         }
     }
