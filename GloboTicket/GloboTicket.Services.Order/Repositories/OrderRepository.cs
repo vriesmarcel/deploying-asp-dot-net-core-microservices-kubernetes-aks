@@ -8,34 +8,44 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GloboTicket.Services.Ordering.Repositories
 {
-    public class OrderRepository: IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
-        private readonly OrderDbContext _orderDbContext;
+        private readonly DbContextOptions<OrderDbContext> _dbContextOptions;
 
-        public OrderRepository(OrderDbContext orderDbContext)
+        public OrderRepository(DbContextOptions<OrderDbContext> dbContextOptions)
         {
-            _orderDbContext = orderDbContext;
+            _dbContextOptions = dbContextOptions;
         }
 
         public async Task<List<Order>> GetOrdersForUser(Guid userId)
         {
+            await using var _orderDbContext = new OrderDbContext(_dbContextOptions);
             return await _orderDbContext.Orders.Where(o => o.UserId == userId).ToListAsync();
         }
 
         public async Task AddOrder(Order order)
         {
-            await _orderDbContext.Orders.AddAsync(order);
-            await _orderDbContext.SaveChangesAsync();
+            await using (var _orderDbContext = new OrderDbContext(_dbContextOptions))
+            {
+                await _orderDbContext.Orders.AddAsync(order);
+                await _orderDbContext.SaveChangesAsync();
+            }
         }
 
         public async Task<Order> GetOrderById(Guid orderId)
         {
-            return await _orderDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefaultAsync();
+            using (var _orderDbContext = new OrderDbContext(_dbContextOptions))
+            {
+                return await _orderDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefaultAsync();
+            }
         }
 
         public async Task<bool> SaveChanges()
         {
-            return (await _orderDbContext.SaveChangesAsync() > 0);
+            using (var _orderDbContext = new OrderDbContext(_dbContextOptions))
+            {
+                return (await _orderDbContext.SaveChangesAsync() > 0);
+            }
         }
     }
 }

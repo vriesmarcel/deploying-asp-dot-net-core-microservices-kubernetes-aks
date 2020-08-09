@@ -29,21 +29,26 @@ namespace GloboTicket.Services.Ordering
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
-
-
             services.AddDbContext<OrderDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            
+            services.AddScoped<IOrderRepository, OrderRepository>(); 
+
+            var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddSingleton(new OrderRepository(optionsBuilder.Options));
+
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering API", Version = "v1" });
             });
 
-            services.AddSingleton<AzServiceBusConsumer>();
+            services.AddSingleton<IAzServiceBusConsumer, AzServiceBusConsumer>();
 
             services.AddControllers();
         }
@@ -71,12 +76,15 @@ namespace GloboTicket.Services.Ordering
 
             app.UseAuthorization();
 
-            app.UseAzServiceBusConsumer();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseAzServiceBusConsumer();
+
+
         }
     }
 }

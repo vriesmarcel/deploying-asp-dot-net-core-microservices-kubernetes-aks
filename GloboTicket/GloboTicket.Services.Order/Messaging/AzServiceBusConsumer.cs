@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.Services.Ordering.Messaging
 {
-    public class AzServiceBusConsumer
+    public class AzServiceBusConsumer: IAzServiceBusConsumer
     {
         private readonly string subscriptionName = "globoticketorder";
         private readonly IReceiverClient checkoutMessageReceiverClient;
         private readonly IReceiverClient orderPaymentUpdateMessageReceiverClient;
 
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
 
         private readonly OrderRepository _orderRepository;
@@ -30,12 +30,13 @@ namespace GloboTicket.Services.Ordering.Messaging
         private readonly string orderPaymentRequestMessageTopic = string.Empty;
         private readonly string orderPaymentUpdatedMessageTopic = string.Empty;
 
-        public AzServiceBusConsumer(IConfiguration configuration, ILogger logger, OrderRepository orderRepository, IMessageBus messageBus)
+        public AzServiceBusConsumer(IConfiguration configuration, IMessageBus messageBus, OrderRepository orderRepository)
         {
             _configuration = configuration;
-            _logger = logger;
             _orderRepository = orderRepository;
-            _messageBus = messageBus;
+            // _logger = logger;
+            //_orderRepository = orderRepository;
+            //_messageBus = messageBus;
 
             var serviceBusConnectionString = configuration.GetValue<string>("ServiceBusConnectionString");
             checkoutMessageTopic = configuration.GetValue<string>("CheckoutMessageTopic");
@@ -118,5 +119,11 @@ namespace GloboTicket.Services.Ordering.Messaging
         {
             //TODO
         }
+    }
+
+    public interface IAzServiceBusConsumer
+    {
+        void Start();
+        void Stop();
     }
 }

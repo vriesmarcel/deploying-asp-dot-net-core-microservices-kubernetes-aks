@@ -29,7 +29,9 @@ namespace GloboTicket.Services.Payment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHostedService<ServiceBusListener>();
-            services.AddScoped<IExternalGatewayPaymentService, ExternalGatewayPaymentService>();
+            services.AddHttpClient<IExternalGatewayPaymentService, ExternalGatewayPaymentService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:ExternalPaymentGateway:Uri"]));
+
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
             services.AddControllers();
