@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GloboTicket.Integration.Messages;
 
-namespace GloboTicket.Services.Payment.Model
+namespace GloboTicket.Services.Ordering.Messages
 {
-    public class OrderPaymentRequestMessage
+    public class OrderPaymentRequestMessage: IntegrationBaseMessage
     {
         public Guid OrderId { get; set; }
         public int Total { get; set; }

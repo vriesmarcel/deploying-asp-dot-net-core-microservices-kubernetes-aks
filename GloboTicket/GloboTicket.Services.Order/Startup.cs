@@ -30,6 +30,8 @@ namespace GloboTicket.Services.Ordering
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
+
 
             services.AddDbContext<OrderDbContext>(options =>
             {

@@ -27,5 +27,15 @@ namespace GloboTicket.Services.Ordering.Repositories
             await _orderDbContext.Orders.AddAsync(order);
             await _orderDbContext.SaveChangesAsync();
         }
+
+        public async Task<Order> GetOrderById(Guid orderId)
+        {
+            return await _orderDbContext.Orders.Where(o => o.Id == orderId).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> SaveChanges()
+        {
+            return (await _orderDbContext.SaveChangesAsync() > 0);
+        }
     }
 }
