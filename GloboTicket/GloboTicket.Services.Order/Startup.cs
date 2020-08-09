@@ -36,6 +36,7 @@ namespace GloboTicket.Services.Ordering
             
             services.AddScoped<IOrderRepository, OrderRepository>(); 
 
+            //Specific DbContext for use from singleton AzServiceBusConsumer
             var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 

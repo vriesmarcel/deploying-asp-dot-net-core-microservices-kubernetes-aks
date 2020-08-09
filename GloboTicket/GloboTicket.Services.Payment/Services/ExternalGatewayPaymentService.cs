@@ -26,7 +26,7 @@ namespace GloboTicket.Services.Payment.Services
             var content = new StringContent(dataAsString);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await  client.PostAsync(configuration.GetValue<string>("ApiConfigs:ExternalPaymentGateway:Uri"), content);
+            var response = await  client.PostAsync(configuration.GetValue<string>("ApiConfigs:ExternalPaymentGateway:Uri") + "/api/paymentapprover", content);
 
             if (!response.IsSuccessStatusCode)
                 throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
