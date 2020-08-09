@@ -1,14 +1,10 @@
-﻿using GloboTicket.Integration.Messages;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
-namespace GloboTicket.Services.ShoppingBasket.Messages
+namespace GloboTicket.Web.Models.View
 {
-    public class BasketCheckoutMessage : IntegrationBaseMessage
+    public class BasketCheckoutViewModel
     {
         public Guid BasketId { get; set; }
-
-        //user info
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -23,9 +19,5 @@ namespace GloboTicket.Services.ShoppingBasket.Messages
         public string CardNumber { get; set; }
         public string CardName { get; set; }
         public string CardExpiration { get; set; }
-
-        //order info
-        public List<BasketLineMessage> BasketLines { get; set; }
-        public int BasketTotal { get; set; }
     }
 }

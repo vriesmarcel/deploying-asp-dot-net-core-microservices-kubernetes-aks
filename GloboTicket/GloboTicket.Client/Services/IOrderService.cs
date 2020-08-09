@@ -8,7 +8,6 @@ namespace GloboTicket.Web.Services
 {
     public interface IOrderService
     {
-
         Task<List<OrderViewModel>> GetOrdersForUser(int userId);
         Task<OrderViewModel> GetOrderDetails(int orderId);
     }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GloboTicket.Services.Discount.Controllers
 {
     [ApiController]
+    [Route("api/discount")]
     public class DiscountController : Controller
     {
         private readonly ICouponRepository _couponRepository;
@@ -23,6 +24,7 @@ namespace GloboTicket.Services.Discount.Controllers
         }
 
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [HttpGet]
         public async Task<IActionResult> GetDiscountForCode(string code)
         {
             var coupon = await _couponRepository.GetCouponByCode(code);

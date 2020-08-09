@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace GloboTicket.Web
 {
@@ -33,6 +34,8 @@ namespace GloboTicket.Web
                 c.BaseAddress = new Uri(config["ApiConfigs:ShoppingBasket:Uri"]));
             services.AddHttpClient<IOrderService, OrderService>(c =>
                 c.BaseAddress = new Uri(config["ApiConfigs:Order:Uri"]));
+            services.AddHttpClient<IDiscountService, DiscountService>(c =>
+                c.BaseAddress = new Uri(config["ApiConfigs:Discount:Uri"]));
 
             services.AddSingleton<Settings>();
         }
