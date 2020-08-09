@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GloboTicket.Services.Order.Messaging;
+﻿using GloboTicket.Services.Ordering.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GloboTicket.Services.Order.Extensions
+namespace GloboTicket.Services.Ordering.Extensions
 {
     public static class ApplicationBuilderExtensions
     {

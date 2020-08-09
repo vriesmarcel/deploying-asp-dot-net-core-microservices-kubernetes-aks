@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Market
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Discount", "GloboTicket.Services.Discount\GloboTicket.Services.Discount.csproj", "{CBD08DF7-C1FA-4670-A265-827259E45867}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Order", "GloboTicket.Services.Order\GloboTicket.Services.Order.csproj", "{A36462E2-CD8A-4D63-BC2D-E4CDB3313A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Ordering", "GloboTicket.Services.Order\GloboTicket.Services.Ordering.csproj", "{A36462E2-CD8A-4D63-BC2D-E4CDB3313A7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.PaymentWorker", "GloboTicket.Services.PaymentWorker\GloboTicket.Services.PaymentWorker.csproj", "{45B65B6B-B48C-457A-83EC-D53DA4972864}"
 EndProject

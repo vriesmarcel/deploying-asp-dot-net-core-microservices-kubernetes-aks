@@ -1,27 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GloboTicket.Services.Ordering.Repositories;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-namespace GloboTicket.Services.Order.Messaging
+namespace GloboTicket.Services.Ordering.Messaging
 {
     public class AzServiceBusConsumer
     {
-        private readonly string connectionString = "Endpoint=sb://globoticket.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Hi0hqUzgNIhGOcceT/gW4B23fHSlbVM+FPAxjq3zZTc=";
-        private readonly string checkoutMessageTopicName = "checkoutmessage";
-        private readonly string orderPaymentUpdateMessageTopicName = "orderpaymentupdatedmessage";
         private readonly string subscriptionName = "globoticketorder";
-        private IReceiverClient checkoutMessageReceiverClient;
-        private IReceiverClient orderPaymentUpdateMessageReceiverClient;
+        private readonly IReceiverClient checkoutMessageReceiverClient;
+        private readonly IReceiverClient orderPaymentUpdateMessageReceiverClient;
 
-        public AzServiceBusConsumer()
+        private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
+
+        private readonly OrderRepository _orderRepository;
+
+        public AzServiceBusConsumer(IConfiguration configuration, ILogger logger, OrderRepository orderRepository)
         {
-            checkoutMessageReceiverClient = new SubscriptionClient(connectionString, checkoutMessageTopicName, subscriptionName);
-            orderPaymentUpdateMessageReceiverClient = new SubscriptionClient(connectionString, orderPaymentUpdateMessageTopicName, subscriptionName);
+            _configuration = configuration;
+            _logger = logger;
+            _orderRepository = orderRepository;
 
+            var serviceBusConnectionString = configuration.GetValue<string>("ServiceBusConnectionString");
+            var checkoutMessageTopic = configuration.GetValue<string>("CheckoutMessageTopic");
+            var orderPaymentRequestMessageTopic = configuration.GetValue<string>("OrderPaymentRequestMessageTopic");
+            var orderPaymentUpdatedMessageTopic = configuration.GetValue<string>("OrderPaymentUpdatedMessageTopic");
+
+            checkoutMessageReceiverClient = new SubscriptionClient(serviceBusConnectionString, checkoutMessageTopic, subscriptionName);
+            orderPaymentUpdateMessageReceiverClient = new SubscriptionClient(serviceBusConnectionString, orderPaymentUpdatedMessageTopic, subscriptionName);
         }
 
         public void Start()
@@ -30,14 +41,12 @@ namespace GloboTicket.Services.Order.Messaging
 
             checkoutMessageReceiverClient.RegisterMessageHandler(OnCheckoutMessageReceived, messageHandlerOptions);
             orderPaymentUpdateMessageReceiverClient.RegisterMessageHandler(OnOrderPaymentUpdateReceived, messageHandlerOptions);
-            
         }
 
         private Task OnOrderPaymentUpdateReceived(Message message, CancellationToken arg2)
         {
             Console.WriteLine(message);
             return Task.CompletedTask;
-
         }
 
         private Task OnCheckoutMessageReceived(Message message, CancellationToken arg2)
@@ -46,9 +55,9 @@ namespace GloboTicket.Services.Order.Messaging
             return Task.CompletedTask;
         }
 
-        private Task OnServiceBusException(ExceptionReceivedEventArgs arg)
+        private Task OnServiceBusException(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
         {
-            Console.WriteLine(arg);
+            Console.WriteLine(exceptionReceivedEventArgs);
 
             return Task.CompletedTask;
         }
