@@ -25,9 +25,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fake", "Fake", "{BEE0F382-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{8BC3B285-5AD7-49A5-AE12-6903C029FEC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Integration.MessagingBus", "GloboTicket.Integration.MessagingBus\GloboTicket.Integration.MessagingBus.csproj", "{532539E3-8124-49E1-BDAE-8931A42BF7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Integration.MessagingBus", "GloboTicket.Integration.MessagingBus\GloboTicket.Integration.MessagingBus.csproj", "{532539E3-8124-49E1-BDAE-8931A42BF7D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Integration.Messages", "GloboTicket.Integration.Messages\GloboTicket.Integration.Messages.csproj", "{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.PaymentGateway", "External.PaymentGateway\External.PaymentGateway.csproj", "{08E68C56-A116-430C-A5C3-78797B49C726}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Services.Payment", "GloboTicket.Services.Payment\GloboTicket.Services.Payment.csproj", "{71D77F9F-0A21-4054-BB7C-A9C75062B202}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,14 @@ Global
 		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08E68C56-A116-430C-A5C3-78797B49C726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08E68C56-A116-430C-A5C3-78797B49C726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08E68C56-A116-430C-A5C3-78797B49C726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08E68C56-A116-430C-A5C3-78797B49C726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D77F9F-0A21-4054-BB7C-A9C75062B202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D77F9F-0A21-4054-BB7C-A9C75062B202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D77F9F-0A21-4054-BB7C-A9C75062B202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D77F9F-0A21-4054-BB7C-A9C75062B202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +97,8 @@ Global
 		{45B65B6B-B48C-457A-83EC-D53DA4972864} = {F3632F51-056C-43C5-9E59-8D371E99C8BF}
 		{532539E3-8124-49E1-BDAE-8931A42BF7D6} = {8BC3B285-5AD7-49A5-AE12-6903C029FEC5}
 		{A6997021-8A1B-4727-9E5C-3EC1DB783BFC} = {8BC3B285-5AD7-49A5-AE12-6903C029FEC5}
+		{08E68C56-A116-430C-A5C3-78797B49C726} = {BEE0F382-1476-489A-9ACA-B4D969B45BDF}
+		{71D77F9F-0A21-4054-BB7C-A9C75062B202} = {F3632F51-056C-43C5-9E59-8D371E99C8BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E1B7AE-99E6-4F8F-977C-CF0FD36BBE42}
