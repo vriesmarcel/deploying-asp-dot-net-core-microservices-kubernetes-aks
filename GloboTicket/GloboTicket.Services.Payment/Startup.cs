@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.Payment.Services;
+using GloboTicket.Services.Payment.Worker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,9 @@ namespace GloboTicket.Services.Payment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHostedService<ServiceBusListener>();
+            services.AddScoped<IExternalGatewayPaymentService, ExternalGatewayPaymentService>();
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
+
             services.AddControllers();
         }
 

@@ -13,5 +13,9 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\GloboTicket.Integration.MessagingBus\GloboTicket.Integration.MessagingBus.csproj" />
+	</ItemGroup>
+
 
 </Project>

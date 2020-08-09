@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.Services.Payment.Model
 {
-    public class OrderPaymentRequestMessage
+    public class PaymentInfo
     {
-        public Guid OrderId { get; set; }
         public int Total { get; set; }
         public string CardNumber { get; set; }
         public string CardName { get; set; }
