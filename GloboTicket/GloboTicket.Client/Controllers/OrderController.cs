@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GloboTicket.Web.Models.View;
+﻿using GloboTicket.Web.Models.View;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace GloboTicket.Web.Controllers
 {
@@ -11,21 +9,23 @@ namespace GloboTicket.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var orderViewModels = new List<OrderViewModel>
+            {
+                new OrderViewModel()
+                {
+                    OrderPlaced = DateTime.Now, OrderId = Guid.NewGuid(), OrderTotal = 100, Paid = true
+                },
+                new OrderViewModel()
+                {
+                    OrderPlaced = DateTime.Now, OrderId = Guid.NewGuid(), OrderTotal = 200, Paid = true
+                },
+                new OrderViewModel()
+                {
+                    OrderPlaced = DateTime.Now, OrderId = Guid.NewGuid(), OrderTotal = 1400, Paid = true
+                }
+            };
+
+            return View(orderViewModels);
         }
-
-        public async Task<IActionResult> Details()
-        {
-
-            return View();
-        }
-
-        public async Task<IActionResult> Checkout(OrderViewModel orderViewModel)
-        {
-            //return View();
-            return null;
-        }
-
-      
     }
 }

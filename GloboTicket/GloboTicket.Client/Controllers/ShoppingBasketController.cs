@@ -72,13 +72,13 @@ namespace GloboTicket.Web.Controllers
 
         public IActionResult Checkout()
         {
-            return RedirectToAction("Checkout");
+            return View();
         }
 
         [HttpPost]
         public IActionResult Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
         {
-            return View();
+            return RedirectToAction("CheckoutComplete");
         }
 
         [HttpPost]
@@ -87,6 +87,11 @@ namespace GloboTicket.Web.Controllers
             string code = basketViewModel.Code;
 
             return View("Index");
+        }
+
+        public IActionResult CheckoutComplete()
+        {
+            return View();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace GloboTicket.Web.Services
 
         public async Task<BasketLine> AddToBasket(Guid basketId, BasketLineForCreation basketLine)
         {
-            if (basketId == Guid.Empty)
+                if (basketId == Guid.Empty)
             {
                 var basketResponse = await client.PostAsJson("/api/baskets", new BasketForCreation { UserId = settings.UserId });
                 var basket = await basketResponse.ReadContentAs<Basket>();
