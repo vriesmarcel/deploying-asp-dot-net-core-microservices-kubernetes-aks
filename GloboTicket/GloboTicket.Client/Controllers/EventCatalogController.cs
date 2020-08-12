@@ -36,7 +36,7 @@ namespace GloboTicket.Web.Controllers
 
             await Task.WhenAll(new Task[] { getBasket, getCategories, getEvents });
 
-            var numberOfItems = getBasket.Result == null ? 0 : getBasket.Result.NumberOfItems;
+            var numberOfItems = getBasket.Result?.NumberOfItems ?? 0;
 
             return View(
                 new EventListModel

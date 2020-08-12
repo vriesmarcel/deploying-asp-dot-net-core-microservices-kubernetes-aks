@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace GloboTicket.Web.Extensions
 {
-    public static  class RequestCookieCollection
+    public static class RequestCookieCollection
     {
         public static Guid GetCurrentBasketId(this IRequestCookieCollection cookies, Settings settings)
         {

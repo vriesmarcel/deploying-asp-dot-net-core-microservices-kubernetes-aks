@@ -1,31 +1,28 @@
-﻿using GloboTicket.Web.Models.View;
+﻿using GloboTicket.Web.Models;
+using GloboTicket.Web.Models.View;
+using GloboTicket.Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GloboTicket.Web.Controllers
 {
     public class OrderController : Controller
     {
-        public IActionResult Index()
-        {
-            var orderViewModels = new List<OrderViewModel>
-            {
-                new OrderViewModel()
-                {
-                    OrderPlaced = DateTime.Now, OrderId = Guid.NewGuid(), OrderTotal = 100, Paid = true
-                },
-                new OrderViewModel()
-                {
-                    OrderPlaced = DateTime.Now, OrderId = Guid.NewGuid(), OrderTotal = 200, Paid = true
-                },
-                new OrderViewModel()
-                {
-                    OrderPlaced = DateTime.Now, OrderId = Guid.NewGuid(), OrderTotal = 1400, Paid = true
-                }
-            };
+        private readonly IOrderService orderService;
+        private readonly Settings settings;
 
-            return View(orderViewModels);
+        public OrderController(Settings settings, IOrderService orderService)
+        {
+            this.settings = settings;
+            this.orderService = orderService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var orders = await orderService.GetOrdersForUser(settings.UserId);
+
+            return View(new OrderViewModel { Orders = orders });
         }
     }
 }

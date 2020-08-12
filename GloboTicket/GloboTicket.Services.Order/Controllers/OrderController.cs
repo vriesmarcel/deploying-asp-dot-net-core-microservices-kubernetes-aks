@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using GloboTicket.Services.Ordering.Repositories;
+﻿using GloboTicket.Services.Ordering.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace GloboTicket.Services.Ordering.Controllers
 {
@@ -17,10 +16,10 @@ namespace GloboTicket.Services.Ordering.Controllers
             _orderRepository = orderRepository;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> List(Guid id)
+        [HttpGet("/user/{userId}")]
+        public async Task<IActionResult> List(Guid userId)
         {
-            var orders = await _orderRepository.GetOrdersForUser(id);
+            var orders = await _orderRepository.GetOrdersForUser(userId);
             return Ok(orders);
         }
     }
