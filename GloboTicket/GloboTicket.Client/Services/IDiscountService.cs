@@ -1,5 +1,5 @@
-﻿using System;
-using GloboTicket.Web.Models.Api;
+﻿using GloboTicket.Web.Models.Api;
+using System;
 using System.Threading.Tasks;
 
 namespace GloboTicket.Web.Services

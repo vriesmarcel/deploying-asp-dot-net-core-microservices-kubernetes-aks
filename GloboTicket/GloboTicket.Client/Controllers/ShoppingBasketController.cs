@@ -38,14 +38,14 @@ namespace GloboTicket.Web.Controllers
             var basketLines = await basketService.GetLinesForBasket(basketId);
 
             var lineViewModels = basketLines.Select(bl => new BasketLineViewModel
-                {
-                    LineId = bl.BasketLineId,
-                    EventId = bl.EventId,
-                    EventName = bl.Event.Name,
-                    Date = bl.Event.Date,
-                    Price = bl.Price,
-                    Quantity = bl.TicketAmount
-                }
+            {
+                LineId = bl.BasketLineId,
+                EventId = bl.EventId,
+                EventName = bl.Event.Name,
+                Date = bl.Event.Date,
+                Price = bl.Price,
+                Quantity = bl.TicketAmount
+            }
             );
 
             var basketViewModel = new BasketViewModel
@@ -56,7 +56,7 @@ namespace GloboTicket.Web.Controllers
             };
 
             basketViewModel.ShoppingCartTotal = basketViewModel.BasketLines.Sum(bl => bl.Price * bl.Quantity);
-            
+
             return basketViewModel;
         }
 
@@ -93,22 +93,45 @@ namespace GloboTicket.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
+        public async Task<IActionResult> Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
         {
-            return RedirectToAction("CheckoutComplete");
+
+            if (ModelState.IsValid)
+            {
+                var basketForCheckout = new BasketForCheckout
+                {
+                    FirstName = basketCheckoutViewModel.FirstName,
+                    LastName = basketCheckoutViewModel.LastName,
+                    Email = basketCheckoutViewModel.Email,
+                    Address = basketCheckoutViewModel.Address,
+                    ZipCode = basketCheckoutViewModel.ZipCode,
+                    City = basketCheckoutViewModel.City,
+                    Country = basketCheckoutViewModel.Country,
+                    CardNumber = basketCheckoutViewModel.CardNumber,
+                    CardName = basketCheckoutViewModel.CardName,
+                    CardExpiration = basketCheckoutViewModel.CardExpiration,
+                    BasketId = basketCheckoutViewModel.BasketId,
+                    UserId = basketCheckoutViewModel.UserId
+                };
+
+                await basketService.Ckeckout(basketCheckoutViewModel.BasketId, basketForCheckout);
+
+                return RedirectToAction("CheckoutComplete");
+            }
+            
+            return View(basketCheckoutViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ApplyDiscountCode(string code)//TODO: refactor to use just single value
+        public async Task<IActionResult> ApplyDiscountCode(string code)
         {
-
-            var coupon =await discountService.GetCouponByCode(code);
+            var coupon = await discountService.GetCouponByCode(code);
 
             if (coupon == null || coupon.AlreadyUsed) return RedirectToAction("Index");
 
             //coupon will be applied to the basket
             var basketId = Request.Cookies.GetCurrentBasketId(settings);
-            await basketService.ApplyCouponToBasket(basketId, new CouponForUpdate() {CouponId = coupon.CouponId});
+            await basketService.ApplyCouponToBasket(basketId, new CouponForUpdate() { CouponId = coupon.CouponId });
             await discountService.UseCoupon(coupon.CouponId);
 
             return RedirectToAction("Index");

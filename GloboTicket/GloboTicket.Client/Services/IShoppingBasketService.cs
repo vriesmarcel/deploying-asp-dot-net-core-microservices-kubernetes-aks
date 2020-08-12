@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GloboTicket.Web.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {
@@ -13,5 +13,6 @@ namespace GloboTicket.Web.Services
         Task UpdateLine(Guid basketId, BasketLineForUpdate basketLineForUpdate);
         Task RemoveLine(Guid basketId, Guid lineId);
         Task<Coupon> ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate);
+        Task<BasketForCheckout> Ckeckout(Guid basketId, BasketForCheckout basketForCheckout);
     }
 }

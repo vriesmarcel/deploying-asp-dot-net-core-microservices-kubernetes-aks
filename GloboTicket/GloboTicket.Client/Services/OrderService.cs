@@ -1,24 +1,19 @@
-﻿using System;
+﻿using GloboTicket.Web.Extensions;
+using GloboTicket.Web.Models.Api;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GloboTicket.Web.Extensions;
-using GloboTicket.Web.Models;
-using GloboTicket.Web.Models.Api;
-using GloboTicket.Web.Models.View;
 
 namespace GloboTicket.Web.Services
 {
     public class OrderService: IOrderService
     {
         private readonly HttpClient client;
-        private readonly Settings settings;
 
-        public OrderService(HttpClient client, Settings settings)
+        public OrderService(HttpClient client)
         {
             this.client = client;
-            this.settings = settings;
         }
 
         public async Task<List<Order>> GetOrdersForUser(Guid userId)

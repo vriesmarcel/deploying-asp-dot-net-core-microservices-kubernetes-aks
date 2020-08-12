@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using GloboTicket.Web.Extensions;
+using GloboTicket.Web.Models;
+using GloboTicket.Web.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GloboTicket.Web.Extensions;
-using GloboTicket.Web.Models;
-using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {
@@ -64,7 +63,12 @@ namespace GloboTicket.Web.Services
         {
             var response = await client.PutAsJson($"/api/baskets/{basketId}/coupon", couponForUpdate);
             return await response.ReadContentAs<Coupon>();
+        }
 
+        public async Task<BasketForCheckout> Ckeckout(Guid basketId, BasketForCheckout basketForCheckout)
+        {
+            var response = await client.PostAsJson($"api/baskets/{basketId}/checkout", basketForCheckout);
+            return await response.ReadContentAs<BasketForCheckout>();
         }
     }
 }

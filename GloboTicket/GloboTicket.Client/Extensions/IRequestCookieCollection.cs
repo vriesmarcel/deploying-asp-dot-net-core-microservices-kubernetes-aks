@@ -1,6 +1,6 @@
-﻿using System;
-using GloboTicket.Web.Models;
+﻿using GloboTicket.Web.Models;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace GloboTicket.Web.Extensions
 {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GloboTicket.Web.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {

@@ -1,21 +1,18 @@
-﻿using System;
-using GloboTicket.Web.Extensions;
-using GloboTicket.Web.Models;
+﻿using GloboTicket.Web.Extensions;
+using GloboTicket.Web.Models.Api;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {
     public class DiscountService : IDiscountService
     {
         private readonly HttpClient client;
-        private readonly Settings settings;
 
-        public DiscountService(HttpClient client, Settings settings)
+        public DiscountService(HttpClient client)
         {
             this.client = client;
-            this.settings = settings;
         }
 
         public async Task<Coupon> GetCouponByCode(string code)
