@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GloboTicket.Services.Discount.DbContexts;
+﻿using GloboTicket.Services.Discount.DbContexts;
 using GloboTicket.Services.Discount.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GloboTicket.Services.Discount.Repositories
 {
@@ -22,10 +21,10 @@ namespace GloboTicket.Services.Discount.Repositories
             return await _discountDbContext.Coupons.Where(x => x.Code == couponCode).FirstOrDefaultAsync();
         }
 
-        public async Task UseCoupon(string couponCode)
+        public async Task UseCoupon(Guid couponId)
         {
             var couponToUpdate =
-                await _discountDbContext.Coupons.Where(x => x.Code == couponCode).FirstOrDefaultAsync();
+                await _discountDbContext.Coupons.Where(x => x.CouponId == couponId).FirstOrDefaultAsync();
 
             if(couponToUpdate == null)
                 throw new Exception();//TODO custom exception

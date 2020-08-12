@@ -1,28 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using GloboTicket.Web.Extensions;
+using GloboTicket.Web.Models;
 using System.Net.Http;
 using System.Threading.Tasks;
+using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {
-    public class DiscountService: IDiscountService
+    public class DiscountService : IDiscountService
     {
-        private readonly HttpClient _client;
+        private readonly HttpClient client;
+        private readonly Settings settings;
 
-        public DiscountService(HttpClient client)
+        public DiscountService(HttpClient client, Settings settings)
         {
-            _client = client;
+            this.client = client;
+            this.settings = settings;
         }
 
-        public Task<int> GetDiscountForCode(string code)
+        public async Task<Coupon> GetCouponByCode(string code)
         {
-            throw new NotImplementedException();
+            if (code == string.Empty)
+                return null;
+
+            var response = await client.GetAsync($"/api/disount/{code}");
+            return await response.ReadContentAs<Coupon>();
         }
 
-        public Task ApplyCode(string code)
+        public async Task UseCoupon(Guid couponId)
         {
-            throw new NotImplementedException();
+            await client.PutAsJson($"/api/disount/use/{couponId}", new CouponForUpdate());
         }
     }
 }

@@ -9,7 +9,7 @@ using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {
-    public class ShoppingBasketService: IShoppingBasketService
+    public class ShoppingBasketService : IShoppingBasketService
     {
         private readonly HttpClient client;
         private readonly Settings settings;
@@ -22,7 +22,7 @@ namespace GloboTicket.Web.Services
 
         public async Task<BasketLine> AddToBasket(Guid basketId, BasketLineForCreation basketLine)
         {
-                if (basketId == Guid.Empty)
+            if (basketId == Guid.Empty)
             {
                 var basketResponse = await client.PostAsJson("/api/baskets", new BasketForCreation { UserId = settings.UserId });
                 var basket = await basketResponse.ReadContentAs<Basket>();
@@ -58,6 +58,13 @@ namespace GloboTicket.Web.Services
         public async Task RemoveLine(Guid basketId, Guid lineId)
         {
             await client.DeleteAsync($"/api/baskets/{basketId}/basketLines/{lineId}");
+        }
+
+        public async Task<Coupon> ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate)
+        {
+            var response = await client.PutAsJson($"/api/baskets/{basketId}/coupon", couponForUpdate);
+            return await response.ReadContentAs<Coupon>();
+
         }
     }
 }

@@ -35,10 +35,10 @@ namespace GloboTicket.Services.Discount.Controllers
             return Ok( _mapper.Map<CouponDto>(coupon));
         }
 
-        [HttpPost("use/{code}")]
-        public async Task<IActionResult> UseCoupon(string code)
+        [HttpPost("use/{couponId}")]
+        public async Task<IActionResult> UseCoupon(Guid couponId)
         {
-            await _couponRepository.UseCoupon(code);
+            await _couponRepository.UseCoupon(couponId);
             return Ok();
         }
     }

@@ -46,9 +46,15 @@
     </tbody>
     <tfoot>
         <tr>
+            <td colspan="4" class="text-right bold big">Discount:</td>
+            <td class="text-right bold big">
+                @Model.Discount.ToString("c")
+            </td>
+        </tr>
+        <tr>
             <td colspan="4" class="text-right bold big">Total:</td>
             <td class="text-right bold big">
-                @Model.ShoppingCartTotal.ToString("c")
+                (@Model.ShoppingCartTotal - @Model.Discount).ToString("c")
             </td>
         </tr>
     </tfoot>
@@ -59,10 +65,9 @@
         <h4>Enter your discount code here!</h4>
 
         <form asp-action="ApplyDiscountCode" method="post" class="form-inline" role="form">
-            <div asp-validation-summary="All" class="text-danger"></div>
 
-            <label class="sr-only" asp-for="Code">Name</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" asp-for="Code" placeholder="ABC-123">
+            <label class="sr-only">Code</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" name="Code" placeholder="ABC-123">
             <input type="submit" class="filterButton" value="Apply" />
 
         </form>

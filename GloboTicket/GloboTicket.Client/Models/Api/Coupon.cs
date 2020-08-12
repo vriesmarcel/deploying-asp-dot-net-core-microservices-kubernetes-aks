@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace GloboTicket.Services.Discount.Models
+namespace GloboTicket.Web.Models.Api
 {
-    public class CouponDto
+    public class Coupon
     {
         public Guid CouponId { get; set; }
         public string Code { get; set; }

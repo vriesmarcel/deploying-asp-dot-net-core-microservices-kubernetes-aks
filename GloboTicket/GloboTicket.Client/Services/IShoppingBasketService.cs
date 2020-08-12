@@ -12,7 +12,6 @@ namespace GloboTicket.Web.Services
         Task<Basket> GetBasket(Guid basketId);
         Task UpdateLine(Guid basketId, BasketLineForUpdate basketLineForUpdate);
         Task RemoveLine(Guid basketId, Guid lineId);
-
-        //Task Checkout
+        Task<Coupon> ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate);
     }
 }

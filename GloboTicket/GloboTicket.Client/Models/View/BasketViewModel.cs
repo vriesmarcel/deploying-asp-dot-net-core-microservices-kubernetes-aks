@@ -9,6 +9,6 @@ namespace GloboTicket.Web.Models.View
         public List<BasketLineViewModel> BasketLines { get; set; }
         public int ShoppingCartTotal { get; set; }
         public string Code { get; set; }
-        public string Discount { get; set; }
+        public int Discount { get; set; }
     }
 }

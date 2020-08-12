@@ -12,44 +12,61 @@ namespace GloboTicket.Web.Controllers
 {
     public class ShoppingBasketController : Controller
     {
-        private readonly IShoppingBasketService _basketService;
-        private readonly IDiscountService _discountService;
-        private readonly Settings _settings;
+        private readonly IShoppingBasketService basketService;
+        private readonly IDiscountService discountService;
+        private readonly Settings settings;
 
         public ShoppingBasketController(IShoppingBasketService basketService, Settings settings, IDiscountService discountService)
         {
-            _basketService = basketService;
-            _settings = settings;
-            _discountService = discountService;
+            this.basketService = basketService;
+            this.settings = settings;
+            this.discountService = discountService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var basketLines = await _basketService.GetLinesForBasket(Request.Cookies.GetCurrentBasketId(_settings));
+            var basketViewModel = await CreateBasketViewModel();
+
+            return View(basketViewModel);
+        }
+
+        private async Task<BasketViewModel> CreateBasketViewModel()
+        {
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+            var basket = await basketService.GetBasket(basketId);
+
+            var basketLines = await basketService.GetLinesForBasket(basketId);
+
             var lineViewModels = basketLines.Select(bl => new BasketLineViewModel
-            {
-                LineId = bl.BasketLineId,
-                EventId = bl.EventId,
-                EventName = bl.Event.Name,
-                Date = bl.Event.Date,
-                Price = bl.Price,
-                Quantity = bl.TicketAmount
-            }
+                {
+                    LineId = bl.BasketLineId,
+                    EventId = bl.EventId,
+                    EventName = bl.Event.Name,
+                    Date = bl.Event.Date,
+                    Price = bl.Price,
+                    Quantity = bl.TicketAmount
+                }
             );
 
-            //TODO: code ophalen voor basket
+            var basketViewModel = new BasketViewModel
+            {
+                BasketLines = lineViewModels.ToList(),
+                Code = basket.Code,
+                Discount = basket.Discount
+            };
 
-            BasketViewModel basketViewModel = new BasketViewModel {BasketLines = lineViewModels.ToList()};
-            return View(basketViewModel);
+            basketViewModel.ShoppingCartTotal = basketViewModel.BasketLines.Sum(bl => bl.Price * bl.Quantity);
+            
+            return basketViewModel;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddLine(BasketLineForCreation basketLine)
         {
-            var basketId = Request.Cookies.GetCurrentBasketId(_settings);
-            var newLine = await _basketService.AddToBasket(basketId, basketLine);
-            Response.Cookies.Append(_settings.BasketIdCookieName, newLine.BasketId.ToString());
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+            var newLine = await basketService.AddToBasket(basketId, basketLine);
+            Response.Cookies.Append(settings.BasketIdCookieName, newLine.BasketId.ToString());
 
             return RedirectToAction("Index");
         }
@@ -58,15 +75,15 @@ namespace GloboTicket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateLine(BasketLineForUpdate basketLineUpdate)
         {
-            var basketId = Request.Cookies.GetCurrentBasketId(_settings);
-            await _basketService.UpdateLine(basketId, basketLineUpdate);
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+            await basketService.UpdateLine(basketId, basketLineUpdate);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> RemoveLine(Guid lineId)
         {
-            var basketId = Request.Cookies.GetCurrentBasketId(_settings);
-            await _basketService.RemoveLine(basketId, lineId);
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+            await basketService.RemoveLine(basketId, lineId);
             return RedirectToAction("Index");
         }
 
@@ -82,11 +99,20 @@ namespace GloboTicket.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult ApplyDiscountCode(BasketViewModel basketViewModel)//TODO: refactor to use just single value
+        public async Task<IActionResult> ApplyDiscountCode(string code)//TODO: refactor to use just single value
         {
-            string code = basketViewModel.Code;
 
-            return View("Index");
+            var coupon =await discountService.GetCouponByCode(code);
+
+            if (coupon == null || coupon.AlreadyUsed) return RedirectToAction("Index");
+
+            //coupon will be applied to the basket
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+            await basketService.ApplyCouponToBasket(basketId, new CouponForUpdate() {CouponId = coupon.CouponId});
+            await discountService.UseCoupon(coupon.CouponId);
+
+            return RedirectToAction("Index");
+
         }
 
         public IActionResult CheckoutComplete()
