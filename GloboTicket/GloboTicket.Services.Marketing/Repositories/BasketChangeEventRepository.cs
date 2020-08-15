@@ -1,22 +1,26 @@
 ﻿using GloboTicket.Services.Marketing.DbContexts;
 using GloboTicket.Services.Marketing.Entities;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GloboTicket.Services.Marketing.Repositories
 {
-    public class BasketChangeEventRepository :IBasketChangeEventRepository
+    public class BasketChangeEventRepository : IBasketChangeEventRepository
     {
-        private readonly MarketingDbContext marketingDbContext;
+        private readonly DbContextOptions<MarketingDbContext> dbContextOptions;
 
-        public BasketChangeEventRepository(MarketingDbContext marketingDbContext)
+        public BasketChangeEventRepository(DbContextOptions<MarketingDbContext> dbContextOptions)
         {
-            this.marketingDbContext = marketingDbContext;
+            this.dbContextOptions = dbContextOptions;
         }
 
         public async Task AddBasketChangeEvent(BasketChangeEvent basketChangeEvent)
         {
-            await marketingDbContext.BasketChangeEvents.AddAsync(basketChangeEvent);
-            await marketingDbContext.SaveChangesAsync();
+            await using (var marketingDbContext = new MarketingDbContext(dbContextOptions))
+            {
+                await marketingDbContext.BasketChangeEvents.AddAsync(basketChangeEvent);
+                await marketingDbContext.SaveChangesAsync();
+            }
         }
     }
 }

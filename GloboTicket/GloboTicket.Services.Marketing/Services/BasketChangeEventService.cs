@@ -16,9 +16,11 @@ namespace GloboTicket.Services.Marketing.Services
             this.client = client;
         }
 
-        public async Task<List<BasketChangeEvent>> GetBasketChangeEvents(DateTimeOffset startDate, int max)
+        public async Task<List<BasketChangeEvent>> GetBasketChangeEvents(DateTime startDate, int max)
         {
-            var response = await client.GetAsync($"/api/basketevent?startDate={startDate}&max={max}");
+            var formattedDate = $"{startDate.Year}/{startDate.Month}/{startDate.Day} {startDate.Hour}:{startDate.Minute}:{startDate.Second}";
+            var s = $"/api/basketevent?fromDate={formattedDate}&max={max}";
+            var response = await client.GetAsync(s);
             return await response.ReadContentAs<List<BasketChangeEvent>>();
         }
     }

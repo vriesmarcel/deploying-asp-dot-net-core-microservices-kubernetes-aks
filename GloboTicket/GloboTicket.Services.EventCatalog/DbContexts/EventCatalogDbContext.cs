@@ -17,9 +17,9 @@ namespace GloboTicket.Services.EventCatalog.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            var concertGuid = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA314}");
-            var musicalGuid = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA315}");
-            var playGuid = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA316}");
+            var concertGuid = Guid.Parse("{B0788D2F-8003-43C1-92A4-EDC76A7C5DDE}");
+            var musicalGuid = Guid.Parse("{6313179F-7837-473A-A4D5-A5571B43E6A6}");
+            var playGuid = Guid.Parse("{BF3F3002-7E53-441E-8B76-F6280BE284AA}");
 
             modelBuilder.Entity<Category>().HasData(new Category
             {
@@ -39,7 +39,7 @@ namespace GloboTicket.Services.EventCatalog.DbContexts
 
             modelBuilder.Entity<Event>().HasData(new Event
             {
-                EventId = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA317}"),
+                EventId = Guid.Parse("{EE272F8B-6096-4CB6-8625-BB4BB2D89E8B}"),
                 Name = "John Egbert Live",
                 Price = 65,
                 Artist = "John Egbert",
@@ -51,7 +51,7 @@ namespace GloboTicket.Services.EventCatalog.DbContexts
 
             modelBuilder.Entity<Event>().HasData(new Event
             {
-                EventId = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA319}"),
+                EventId = Guid.Parse("{3448D5A4-0F72-4DD7-BF15-C14A46B26C00}"),
                 Name = "The State of Affairs: Michael Live!",
                 Price = 85,
                 Artist = "Michael Johnson",
@@ -64,7 +64,7 @@ namespace GloboTicket.Services.EventCatalog.DbContexts
 
             modelBuilder.Entity<Event>().HasData(new Event
             {
-                EventId = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA318}"),
+                EventId = Guid.Parse("{62787623-4C52-43FE-B0C9-B7044FB5929B}"),
                 Name = "To the Moon and Back",
                 Price = 135,
                 Artist = "Nick Sailor",

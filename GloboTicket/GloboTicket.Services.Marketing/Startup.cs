@@ -31,10 +31,17 @@ namespace GloboTicket.Services.Marketing
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            //singleton DbContext for timed worker
+            var optionsBuilder = new DbContextOptionsBuilder<MarketingDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddSingleton(new BasketChangeEventRepository(optionsBuilder.Options));
+
+
             services.AddScoped<IBasketChangeEventRepository, BasketChangeEventRepository>();
 
             services.AddHttpClient<IBasketChangeEventService, BasketChangeEventService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiConfigs:Basket:Uri"]));
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:ShoppingBasket:Uri"]));
 
             services.AddDbContext<MarketingDbContext>(options =>
             {

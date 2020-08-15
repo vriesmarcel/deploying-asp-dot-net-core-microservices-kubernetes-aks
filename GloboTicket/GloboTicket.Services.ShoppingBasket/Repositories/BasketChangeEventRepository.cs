@@ -23,7 +23,7 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
             await shoppingBasketDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<BasketChangeEvent>> GetBasketChangeEvents(DateTimeOffset startDate, int max)
+        public async Task<List<BasketChangeEvent>> GetBasketChangeEvents(DateTime startDate, int max)
         {
             return await shoppingBasketDbContext.BasketChangeEvents.Where(b => b.InsertedAt > startDate)
                 .OrderBy(b => b.InsertedAt).Take(max).ToListAsync();

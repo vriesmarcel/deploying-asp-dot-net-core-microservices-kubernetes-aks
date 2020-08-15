@@ -9,6 +9,6 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
     public interface IBasketChangeEventRepository
     {
         Task AddBasketEvent(BasketChangeEvent basketChangeEvent);
-        Task<List<BasketChangeEvent>> GetBasketChangeEvents(DateTimeOffset startDate, int max);
+        Task<List<BasketChangeEvent>> GetBasketChangeEvents(DateTime startDate, int max);
     }
 }

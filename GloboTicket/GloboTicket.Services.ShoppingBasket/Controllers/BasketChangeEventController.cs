@@ -22,7 +22,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEvents([FromQuery] DateTimeOffset fromDate, [FromQuery] int max)
+        public async Task<IActionResult> GetEvents([FromQuery] DateTime fromDate, [FromQuery] int max)
         {
             var events = await basketChangeEventRepository.GetBasketChangeEvents(fromDate, max);
             return Ok(mapper.Map<List<BasketChangeEventForPublication>>(events));
