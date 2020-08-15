@@ -1,6 +1,6 @@
-﻿using System;
-using GloboTicket.Services.Discount.Entities;
+﻿using GloboTicket.Services.Discount.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace GloboTicket.Services.Discount.DbContexts
 {

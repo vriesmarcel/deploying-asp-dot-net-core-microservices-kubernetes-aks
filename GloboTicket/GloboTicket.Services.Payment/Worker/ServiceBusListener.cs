@@ -18,23 +18,24 @@ namespace GloboTicket.Services.Payment.Worker
     {
         private readonly ILogger logger;
         private readonly IConfiguration configuration;
-        private ISubscriptionClient _subscriptionClient;
-        private readonly IExternalGatewayPaymentService _externalGatewayPaymentService;
-        private readonly IMessageBus _messageBus;
-        private readonly string orderPaymentUpdatedMessageTopic = string.Empty;
+        private ISubscriptionClient subscriptionClient;
+        private readonly IExternalGatewayPaymentService externalGatewayPaymentService;
+        private readonly IMessageBus messageBus;
+        private readonly string orderPaymentUpdatedMessageTopic;
 
         public ServiceBusListener(IConfiguration configuration, ILoggerFactory loggerFactory, IExternalGatewayPaymentService externalGatewayPaymentService, IMessageBus messageBus)
         {
-            this.logger = loggerFactory.CreateLogger<ServiceBusListener>();
-            this.configuration = configuration;
+            logger = loggerFactory.CreateLogger<ServiceBusListener>();
             orderPaymentUpdatedMessageTopic = configuration.GetValue<string>("OrderPaymentUpdatedMessageTopic");
-            _externalGatewayPaymentService = externalGatewayPaymentService;
-            _messageBus = messageBus;
+
+            this.configuration = configuration;
+            this.externalGatewayPaymentService = externalGatewayPaymentService;
+            this.messageBus = messageBus;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _subscriptionClient = new SubscriptionClient(configuration.GetValue<string>("ServiceBusConnectionString"), configuration.GetValue<string>("OrderPaymentRequestMessageTopic"), configuration.GetValue<string>("subscriptionName"));
+            subscriptionClient = new SubscriptionClient(configuration.GetValue<string>("ServiceBusConnectionString"), configuration.GetValue<string>("OrderPaymentRequestMessageTopic"), configuration.GetValue<string>("subscriptionName"));
 
             var messageHandlerOptions = new MessageHandlerOptions(e =>
             {
@@ -46,7 +47,7 @@ namespace GloboTicket.Services.Payment.Worker
                 AutoComplete = false
             };
 
-            _subscriptionClient.RegisterMessageHandler(ProcessMessageAsync, messageHandlerOptions);
+            subscriptionClient.RegisterMessageHandler(ProcessMessageAsync, messageHandlerOptions);
 
             return Task.CompletedTask;
         }
@@ -54,7 +55,7 @@ namespace GloboTicket.Services.Payment.Worker
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             logger.LogDebug($"ServiceBusListener stopping.");
-            await this._subscriptionClient.CloseAsync();
+            await this.subscriptionClient.CloseAsync();
         }
 
         protected void ProcessError(Exception e)
@@ -75,18 +76,20 @@ namespace GloboTicket.Services.Payment.Worker
                 Total = orderPaymentRequestMessage.Total
             };
 
-            var result = await _externalGatewayPaymentService.PerformPayment(paymentInfo);
+            var result = await externalGatewayPaymentService.PerformPayment(paymentInfo);
 
-            await this._subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+            await this.subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
 
             //send payment result to order service via service bus
-            OrderPaymentUpdateMessage orderPaymentUpdateMessage = new OrderPaymentUpdateMessage();
-            orderPaymentUpdateMessage.PaymentSuccess = result;
-            orderPaymentUpdateMessage.OrderId = orderPaymentRequestMessage.OrderId;
+            OrderPaymentUpdateMessage orderPaymentUpdateMessage = new OrderPaymentUpdateMessage
+            {
+                PaymentSuccess = result, 
+                OrderId = orderPaymentRequestMessage.OrderId
+            };
 
             try
             {
-                await _messageBus.PublishMessage(orderPaymentUpdateMessage, orderPaymentUpdatedMessageTopic);
+                await messageBus.PublishMessage(orderPaymentUpdateMessage, orderPaymentUpdatedMessageTopic);
             }
             catch (Exception e)
             {
@@ -94,9 +97,7 @@ namespace GloboTicket.Services.Payment.Worker
                 throw;
             }
 
-
             logger.LogDebug($"{orderPaymentRequestMessage.OrderId}: ServiceBusListener received item.");
-
             await Task.Delay(20000);
             logger.LogDebug($"{orderPaymentRequestMessage.OrderId}:  ServiceBusListener processed item.");
         }

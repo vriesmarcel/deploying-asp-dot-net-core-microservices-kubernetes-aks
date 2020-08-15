@@ -11,7 +11,6 @@ namespace GloboTicket.Services.Ordering.DbContexts
         }
 
         public DbSet<Order> Orders { get; set; }
-        //public DbSet<OrderLine> OrderLines { get; set; }
         
     }
 }

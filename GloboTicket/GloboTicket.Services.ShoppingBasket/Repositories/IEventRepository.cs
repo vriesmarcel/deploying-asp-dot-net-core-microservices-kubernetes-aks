@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GloboTicket.Services.ShoppingBasket.Entities;
+using System;
 using System.Threading.Tasks;
-using GloboTicket.Services.ShoppingBasket.Entities;
 
 namespace GloboTicket.Services.ShoppingBasket.Repositories
 {

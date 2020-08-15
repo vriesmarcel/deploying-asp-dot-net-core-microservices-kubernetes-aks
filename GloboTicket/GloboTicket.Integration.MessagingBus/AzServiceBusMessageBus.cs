@@ -18,7 +18,6 @@ namespace GloboTicket.Integration.MessagingBus
             
         }
 
-
         public async Task PublishMessage(IntegrationBaseMessage message, string topicName)
         {
             ISenderClient topicClient = new TopicClient(connectionString, topicName);

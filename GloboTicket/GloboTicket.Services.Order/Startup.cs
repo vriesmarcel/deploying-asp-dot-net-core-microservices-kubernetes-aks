@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.Ordering.DbContexts;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace GloboTicket.Services.Ordering
 {
@@ -33,8 +33,8 @@ namespace GloboTicket.Services.Ordering
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            
-            services.AddScoped<IOrderRepository, OrderRepository>(); 
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             //Specific DbContext for use from singleton AzServiceBusConsumer
             var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>();

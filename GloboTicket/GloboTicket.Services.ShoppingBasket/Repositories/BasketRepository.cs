@@ -2,7 +2,6 @@
 using GloboTicket.Services.ShoppingBasket.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,31 +9,31 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
-        private readonly ShoppingBasketDbContext _shoppingBasketDbContext;
+        private readonly ShoppingBasketDbContext shoppingBasketDbContext;
 
         public BasketRepository(ShoppingBasketDbContext shoppingBasketDbContext)
         {
-            _shoppingBasketDbContext = shoppingBasketDbContext;
+            this.shoppingBasketDbContext = shoppingBasketDbContext;
         }
 
         public async Task<Basket> GetBasketById(Guid basketId)
         {
-            return await _shoppingBasketDbContext.Baskets.Include(sb => sb.BasketLines)
+            return await shoppingBasketDbContext.Baskets.Include(sb => sb.BasketLines)
                 .Where(b => b.BasketId == basketId).FirstOrDefaultAsync();
         }
 
         public async Task<bool> BasketExists(Guid basketId)
         {
-            return await _shoppingBasketDbContext.Baskets
+            return await shoppingBasketDbContext.Baskets
                 .AnyAsync(b => b.BasketId == basketId);
         }
 
         public async Task ClearBasket(Guid basketId)
         {
-            var basketLinesToClear = _shoppingBasketDbContext.BasketLines.Where(b => b.BasketId == basketId);
-            _shoppingBasketDbContext.BasketLines.RemoveRange(basketLinesToClear);
+            var basketLinesToClear = shoppingBasketDbContext.BasketLines.Where(b => b.BasketId == basketId);
+            shoppingBasketDbContext.BasketLines.RemoveRange(basketLinesToClear);
 
-            var basket = _shoppingBasketDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
+            var basket = shoppingBasketDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
             if (basket != null) basket.CouponId = null;
 
             await SaveChanges();
@@ -42,12 +41,12 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
 
         public void AddBasket(Basket basket)
         {
-            _shoppingBasketDbContext.Baskets.Add(basket);
+            shoppingBasketDbContext.Baskets.Add(basket);
         }
 
         public async Task<bool> SaveChanges()
         {
-            return (await _shoppingBasketDbContext.SaveChangesAsync() > 0);
+            return (await shoppingBasketDbContext.SaveChangesAsync() > 0);
         }
     }
 }

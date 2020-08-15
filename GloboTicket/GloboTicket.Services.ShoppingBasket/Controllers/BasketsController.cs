@@ -3,13 +3,13 @@ using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.ShoppingBasket.Messages;
 using GloboTicket.Services.ShoppingBasket.Models;
 using GloboTicket.Services.ShoppingBasket.Repositories;
+using GloboTicket.Services.ShoppingBasket.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using GloboTicket.Services.ShoppingBasket.Services;
 
 namespace GloboTicket.Services.ShoppingBasket.Controllers
 {
@@ -17,29 +17,29 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
     [ApiController]
     public class BasketsController : ControllerBase
     {
-        private readonly IBasketRepository _basketRepository;
-        private readonly IMapper _mapper;
-        private readonly IMessageBus _messageBus;
-        private readonly IDiscountService _discountService;
+        private readonly IBasketRepository basketRepository;
+        private readonly IMapper mapper;
+        private readonly IMessageBus messageBus;
+        private readonly IDiscountService discountService;
 
         public BasketsController(IBasketRepository basketRepository, IMapper mapper, IMessageBus messageBus, IDiscountService discountService)
         {
-            _basketRepository = basketRepository;
-            _mapper = mapper;
-            _messageBus = messageBus;
-            _discountService = discountService;
+            this.basketRepository = basketRepository;
+            this.mapper = mapper;
+            this.messageBus = messageBus;
+            this.discountService = discountService;
         }
 
         [HttpGet("{basketId}", Name = "GetBasket")]
         public async Task<ActionResult<Basket>> Get(Guid basketId)
         {
-            var basket = await _basketRepository.GetBasketById(basketId);
+            var basket = await basketRepository.GetBasketById(basketId);
             if (basket == null)
             {
                 return NotFound();
             }
 
-            var result = _mapper.Map<Basket>(basket);
+            var result = mapper.Map<Basket>(basket);
             result.NumberOfItems = basket.BasketLines.Sum(bl => bl.TicketAmount);
             return Ok(result);
         }
@@ -47,12 +47,12 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         [HttpPost]
         public async Task<ActionResult<Basket>> Post(BasketForCreation basketForCreation)
         {
-            var basketEntity = _mapper.Map<Entities.Basket>(basketForCreation);
+            var basketEntity = mapper.Map<Entities.Basket>(basketForCreation);
 
-            _basketRepository.AddBasket(basketEntity);
-            await _basketRepository.SaveChanges();
+            basketRepository.AddBasket(basketEntity);
+            await basketRepository.SaveChanges();
 
-            var basketToReturn = _mapper.Map<Basket>(basketEntity);
+            var basketToReturn = mapper.Map<Basket>(basketEntity);
 
             return CreatedAtRoute(
                 "GetBasket",
@@ -65,7 +65,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ApplyCouponToBasket(Guid basketId, Coupon coupon)
         {
-            var basket = await _basketRepository.GetBasketById(basketId);
+            var basket = await basketRepository.GetBasketById(basketId);
 
             if (basket == null)
             {
@@ -73,7 +73,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
             }
 
             basket.CouponId = coupon.CouponId;
-            await _basketRepository.SaveChanges();
+            await basketRepository.SaveChanges();
 
             return Accepted();
         }
@@ -84,14 +84,14 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         public async Task<IActionResult> CheckoutBasketAsync([FromBody] BasketCheckout basketCheckout)
         {
             //based on basket checkout, fetch the basket lines from repo
-            var basket = await _basketRepository.GetBasketById(basketCheckout.BasketId);
+            var basket = await basketRepository.GetBasketById(basketCheckout.BasketId);
 
             if (basket == null)
             {
                 return BadRequest();
             }
 
-            BasketCheckoutMessage basketCheckoutMessage = _mapper.Map<BasketCheckoutMessage>(basketCheckout);
+            BasketCheckoutMessage basketCheckoutMessage = mapper.Map<BasketCheckoutMessage>(basketCheckout);
             basketCheckoutMessage.BasketLines = new List<BasketLineMessage>();
             int total = 0;
 
@@ -113,7 +113,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
             Coupon coupon = null;
 
             if (basket.CouponId.HasValue)
-                coupon = await _discountService.GetCoupon(basket.CouponId.Value);
+                coupon = await discountService.GetCoupon(basket.CouponId.Value);
 
             if (coupon != null)
             {
@@ -126,7 +126,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
 
             try
             {
-                await _messageBus.PublishMessage(basketCheckoutMessage, "checkoutmessage");
+                await messageBus.PublishMessage(basketCheckoutMessage, "checkoutmessage");
             }
             catch (Exception e)
             {
@@ -134,7 +134,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
                 throw;
             }
 
-            await _basketRepository.ClearBasket(basketCheckout.BasketId);
+            await basketRepository.ClearBasket(basketCheckout.BasketId);
             return Accepted(basketCheckoutMessage);
         }
     }

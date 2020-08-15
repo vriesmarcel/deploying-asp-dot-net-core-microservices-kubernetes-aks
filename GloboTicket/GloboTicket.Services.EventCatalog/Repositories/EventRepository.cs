@@ -17,7 +17,6 @@ namespace GloboTicket.Services.EventCatalog.Repositories
             _eventCatalogDbContext = eventCatalogDbContext;
         }
 
-
         public async Task<IEnumerable<Event>> GetEvents(Guid categoryId)
         {
             return await _eventCatalogDbContext.Events
