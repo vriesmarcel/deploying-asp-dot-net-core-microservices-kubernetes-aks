@@ -32,6 +32,7 @@ namespace GloboTicket.Services.ShoppingBasket
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IBasketLinesRepository, BasketLinesRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IBasketChangeEventRepository, BasketChangeEventRepository>();
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 

@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GloboTicket.Services.Marketing.DbContexts;
+using GloboTicket.Services.Marketing.Repositories;
+using GloboTicket.Services.Marketing.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System;
+using AutoMapper;
+using GloboTicket.Services.Marketing.Worker;
 
 namespace GloboTicket.Services.Marketing
 {
@@ -26,6 +26,21 @@ namespace GloboTicket.Services.Marketing
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddHostedService<TimedBasketChangeEventService>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IBasketChangeEventRepository, BasketChangeEventRepository>();
+
+            services.AddHttpClient<IBasketChangeEventService, BasketChangeEventService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:Basket:Uri"]));
+
+            services.AddDbContext<MarketingDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
