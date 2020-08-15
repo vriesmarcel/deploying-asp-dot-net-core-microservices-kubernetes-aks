@@ -19,15 +19,14 @@ namespace GloboTicket.Services.Ordering.Messaging
         private readonly IReceiverClient checkoutMessageReceiverClient;
         private readonly IReceiverClient orderPaymentUpdateMessageReceiverClient;
 
-        //private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
 
         private readonly OrderRepository _orderRepository;
         private readonly IMessageBus _messageBus;
 
-        private readonly string checkoutMessageTopic = string.Empty;
-        private readonly string orderPaymentRequestMessageTopic = string.Empty;
-        private readonly string orderPaymentUpdatedMessageTopic = string.Empty;
+        private readonly string checkoutMessageTopic;
+        private readonly string orderPaymentRequestMessageTopic;
+        private readonly string orderPaymentUpdatedMessageTopic;
 
         public AzServiceBusConsumer(IConfiguration configuration, IMessageBus messageBus, OrderRepository orderRepository)
         {
@@ -36,10 +35,10 @@ namespace GloboTicket.Services.Ordering.Messaging
             // _logger = logger;
             _messageBus = messageBus;
 
-            var serviceBusConnectionString = configuration.GetValue<string>("ServiceBusConnectionString");
-            checkoutMessageTopic = configuration.GetValue<string>("CheckoutMessageTopic");
-            orderPaymentRequestMessageTopic = configuration.GetValue<string>("OrderPaymentRequestMessageTopic");
-            orderPaymentUpdatedMessageTopic = configuration.GetValue<string>("OrderPaymentUpdatedMessageTopic");
+            var serviceBusConnectionString = _configuration.GetValue<string>("ServiceBusConnectionString");
+            checkoutMessageTopic = _configuration.GetValue<string>("CheckoutMessageTopic");
+            orderPaymentRequestMessageTopic = _configuration.GetValue<string>("OrderPaymentRequestMessageTopic");
+            orderPaymentUpdatedMessageTopic = _configuration.GetValue<string>("OrderPaymentUpdatedMessageTopic");
 
             checkoutMessageReceiverClient = new SubscriptionClient(serviceBusConnectionString, checkoutMessageTopic, subscriptionName);
             orderPaymentUpdateMessageReceiverClient = new SubscriptionClient(serviceBusConnectionString, orderPaymentUpdatedMessageTopic, subscriptionName);
@@ -112,13 +111,6 @@ namespace GloboTicket.Services.Ordering.Messaging
 
         public void Stop()
         {
-            //TODO
         }
-    }
-
-    public interface IAzServiceBusConsumer
-    {
-        void Start();
-        void Stop();
     }
 }

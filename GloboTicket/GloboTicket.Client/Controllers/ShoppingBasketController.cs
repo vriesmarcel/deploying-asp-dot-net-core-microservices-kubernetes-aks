@@ -125,7 +125,7 @@ namespace GloboTicket.Web.Controllers
                     UserId = settings.UserId
                 };
 
-                await basketService.Ckeckout(basketCheckoutViewModel.BasketId, basketForCheckout);
+                await basketService.Checkout(basketCheckoutViewModel.BasketId, basketForCheckout);
 
                 return RedirectToAction("CheckoutComplete");
             }

@@ -78,7 +78,7 @@ namespace GloboTicket.Services.Payment.Worker
 
             var result = await externalGatewayPaymentService.PerformPayment(paymentInfo);
 
-            await this.subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
 
             //send payment result to order service via service bus
             OrderPaymentUpdateMessage orderPaymentUpdateMessage = new OrderPaymentUpdateMessage
