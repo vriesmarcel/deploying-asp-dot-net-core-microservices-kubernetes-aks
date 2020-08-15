@@ -57,6 +57,24 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
                 basketToReturn);
         }
 
+        [HttpPut("{basketId}/coupon")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> ApplyCouponToBasket(Guid basketId, Coupon coupon)
+        {
+            var basket = await _basketRepository.GetBasketById(basketId);
+
+            if (basket == null)
+            {
+                return BadRequest();
+            }
+
+            basket.CouponId = coupon.CouponId;
+            await _basketRepository.SaveChanges();
+            
+            return Accepted();
+        }
+
         [HttpPost("checkout")]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

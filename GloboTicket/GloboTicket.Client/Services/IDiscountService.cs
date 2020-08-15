@@ -8,5 +8,6 @@ namespace GloboTicket.Web.Services
     {
         Task<Coupon> GetCouponByCode(string code);
         Task UseCoupon(Guid couponId);
+        Task<Coupon> GetCouponById(Guid couponId);
     }
 }

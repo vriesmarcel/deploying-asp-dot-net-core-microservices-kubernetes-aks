@@ -33,7 +33,7 @@ namespace GloboTicket.Web.Controllers
         private async Task<BasketViewModel> CreateBasketViewModel()
         {
             var basketId = Request.Cookies.GetCurrentBasketId(settings);
-            var basket = await basketService.GetBasket(basketId);
+            Basket basket = await basketService.GetBasket(basketId);
 
             var basketLines = await basketService.GetLinesForBasket(basketId);
 
@@ -48,12 +48,20 @@ namespace GloboTicket.Web.Controllers
             }
             );
 
+
+
             var basketViewModel = new BasketViewModel
             {
-                BasketLines = lineViewModels.ToList(),
-                Code = basket.Code,
-                Discount = basket.Discount
+                BasketLines = lineViewModels.ToList()
             };
+
+            var coupon = await discountService.GetCouponById(basket.CouponId);
+
+            if (coupon != null)
+            {
+                basketViewModel.Code = coupon.Code;
+                basketViewModel.Discount = coupon.Amount;
+            }
 
             basketViewModel.ShoppingCartTotal = basketViewModel.BasketLines.Sum(bl => bl.Price * bl.Quantity);
 
@@ -93,6 +101,7 @@ namespace GloboTicket.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
         {
 
@@ -118,11 +127,12 @@ namespace GloboTicket.Web.Controllers
 
                 return RedirectToAction("CheckoutComplete");
             }
-            
+
             return View(basketCheckoutViewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyDiscountCode(string code)
         {
             var coupon = await discountService.GetCouponByCode(code);

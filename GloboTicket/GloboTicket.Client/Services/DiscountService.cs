@@ -20,13 +20,19 @@ namespace GloboTicket.Web.Services
             if (code == string.Empty)
                 return null;
 
-            var response = await client.GetAsync($"/api/disount/{code}");
+            var response = await client.GetAsync($"/api/discount/code/{code}");
+            return await response.ReadContentAs<Coupon>();
+        }
+
+        public async Task<Coupon> GetCouponById(Guid couponId)
+        {
+            var response = await client.GetAsync($"/api/discount/{couponId}");
             return await response.ReadContentAs<Coupon>();
         }
 
         public async Task UseCoupon(Guid couponId)
         {
-            await client.PutAsJson($"/api/disount/use/{couponId}", new CouponForUpdate());
+            var response = await client.PutAsJson($"/api/discount/use/{couponId}", new CouponForUpdate());
         }
     }
 }

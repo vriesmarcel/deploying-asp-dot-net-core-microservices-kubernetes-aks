@@ -24,7 +24,7 @@ namespace GloboTicket.Services.Discount.Controllers
         }
 
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [HttpGet]
+        [HttpGet("code/{code}")]
         public async Task<IActionResult> GetDiscountForCode(string code)
         {
             var coupon = await _couponRepository.GetCouponByCode(code);
@@ -35,7 +35,19 @@ namespace GloboTicket.Services.Discount.Controllers
             return Ok( _mapper.Map<CouponDto>(coupon));
         }
 
-        [HttpPost("use/{couponId}")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [HttpGet("{couponId}")]
+        public async Task<IActionResult> GetDiscountForCode(Guid couponId)
+        {
+            var coupon = await _couponRepository.GetCouponById(couponId);
+
+            if (coupon == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<CouponDto>(coupon));
+        }
+
+        [HttpPut("use/{couponId}")]
         public async Task<IActionResult> UseCoupon(Guid couponId)
         {
             await _couponRepository.UseCoupon(couponId);

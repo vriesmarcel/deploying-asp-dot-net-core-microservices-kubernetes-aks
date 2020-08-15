@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.Services.Discount.Repositories
 {
-    public class CouponRepository: ICouponRepository
+    public class CouponRepository : ICouponRepository
     {
         private readonly DiscountDbContext _discountDbContext;
 
@@ -26,11 +26,16 @@ namespace GloboTicket.Services.Discount.Repositories
             var couponToUpdate =
                 await _discountDbContext.Coupons.Where(x => x.CouponId == couponId).FirstOrDefaultAsync();
 
-            if(couponToUpdate == null)
+            if (couponToUpdate == null)
                 throw new Exception();//TODO custom exception
 
             couponToUpdate.AlreadyUsed = true;
             await _discountDbContext.SaveChangesAsync();
+        }
+
+        public async Task<Coupon> GetCouponById(Guid couponId)
+        {
+            return await _discountDbContext.Coupons.Where(x => x.CouponId == couponId).FirstOrDefaultAsync();
         }
     }
 }

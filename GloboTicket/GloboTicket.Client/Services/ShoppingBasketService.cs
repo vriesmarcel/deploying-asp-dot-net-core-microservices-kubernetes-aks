@@ -59,10 +59,10 @@ namespace GloboTicket.Web.Services
             await client.DeleteAsync($"/api/baskets/{basketId}/basketLines/{lineId}");
         }
 
-        public async Task<Coupon> ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate)
+        public async Task ApplyCouponToBasket(Guid basketId, CouponForUpdate couponForUpdate)
         {
             var response = await client.PutAsJson($"/api/baskets/{basketId}/coupon", couponForUpdate);
-            return await response.ReadContentAs<Coupon>();
+            //return await response.ReadContentAs<Coupon>();
         }
 
         public async Task<BasketForCheckout> Ckeckout(Guid basketId, BasketForCheckout basketForCheckout)

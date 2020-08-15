@@ -8,5 +8,6 @@ namespace GloboTicket.Services.Discount.Repositories
     {
         Task<Coupon> GetCouponByCode(string couponCode);
         Task UseCoupon(Guid couponId);
+        Task<Coupon> GetCouponById(Guid couponId);
     }
 }
