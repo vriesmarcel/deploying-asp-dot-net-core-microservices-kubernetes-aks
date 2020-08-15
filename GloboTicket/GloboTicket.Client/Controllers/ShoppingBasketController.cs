@@ -45,9 +45,7 @@ namespace GloboTicket.Web.Controllers
                 Date = bl.Event.Date,
                 Price = bl.Price,
                 Quantity = bl.TicketAmount
-            }
-            );
-
+            });
 
 
             var basketViewModel = new BasketViewModel
@@ -55,7 +53,10 @@ namespace GloboTicket.Web.Controllers
                 BasketLines = lineViewModels.ToList()
             };
 
-            var coupon = await discountService.GetCouponById(basket.CouponId);
+            Coupon coupon = null;
+
+            if (basket.CouponId.HasValue)
+                coupon = await discountService.GetCouponById(basket.CouponId.Value);
 
             if (coupon != null)
             {

@@ -9,6 +9,6 @@ namespace GloboTicket.Web.Models.Api
         public int NumberOfItems { get; set; }
         public string Code { get; set; }
         public int Discount { get; set; }
-        public Guid CouponId { get; set; }
+        public Guid? CouponId { get; set; }
     }
 }

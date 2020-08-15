@@ -15,7 +15,7 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
         public BasketRepository(ShoppingBasketDbContext shoppingBasketDbContext)
         {
             _shoppingBasketDbContext = shoppingBasketDbContext;
-        }         
+        }
 
         public async Task<Basket> GetBasketById(Guid basketId)
         {
@@ -35,7 +35,7 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
             _shoppingBasketDbContext.BasketLines.RemoveRange(basketLinesToClear);
 
             var basket = _shoppingBasketDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
-            if (basket != null) basket.CouponId = Guid.Empty;
+            if (basket != null) basket.CouponId = null;
 
             await SaveChanges();
         }

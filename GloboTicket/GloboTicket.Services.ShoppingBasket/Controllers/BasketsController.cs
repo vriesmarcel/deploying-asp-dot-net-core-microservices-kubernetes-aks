@@ -74,7 +74,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
 
             basket.CouponId = coupon.CouponId;
             await _basketRepository.SaveChanges();
-            
+
             return Accepted();
         }
 
@@ -99,7 +99,9 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
             {
                 var basketLineMessage = new BasketLineMessage
                 {
-                    BasketLineId = b.BasketLineId, Price = b.Price, TicketAmount = b.TicketAmount
+                    BasketLineId = b.BasketLineId,
+                    Price = b.Price,
+                    TicketAmount = b.TicketAmount
                 };
 
                 total += b.Price * b.TicketAmount;
@@ -108,10 +110,14 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
             }
 
             //apply discountt by talking to the discount service
-            var discount = await _discountService.GetCoupon(basket.CouponId);
-            if (discount != null)
+            Coupon coupon = null;
+
+            if (basket.CouponId.HasValue)
+                coupon = await _discountService.GetCoupon(basket.CouponId.Value);
+
+            if (coupon != null)
             {
-                basketCheckoutMessage.BasketTotal = total - discount.Amount;
+                basketCheckoutMessage.BasketTotal = total - coupon.Amount;
             }
             else
             {

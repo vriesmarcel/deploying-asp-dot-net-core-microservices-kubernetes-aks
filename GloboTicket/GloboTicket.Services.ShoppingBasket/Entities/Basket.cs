@@ -13,6 +13,6 @@ namespace GloboTicket.Services.ShoppingBasket.Entities
 
         public Collection<BasketLine> BasketLines { get; set; }
 
-        public Guid CouponId { get; set; }
+        public Guid? CouponId { get; set; }
     }
 }
