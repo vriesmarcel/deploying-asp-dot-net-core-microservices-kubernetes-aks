@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.ShoppingBasket.Messages;
 using GloboTicket.Services.ShoppingBasket.Models;
 using GloboTicket.Services.ShoppingBasket.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using GloboTicket.Services.ShoppingBasket.Services;
 
 namespace GloboTicket.Services.ShoppingBasket.Controllers
 {
@@ -19,12 +20,14 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         private readonly IBasketRepository _basketRepository;
         private readonly IMapper _mapper;
         private readonly IMessageBus _messageBus;
+        private readonly IDiscountService _discountService;
 
-        public BasketsController(IBasketRepository basketRepository, IMapper mapper, IMessageBus messageBus)
+        public BasketsController(IBasketRepository basketRepository, IMapper mapper, IMessageBus messageBus, IDiscountService discountService)
         {
             _basketRepository = basketRepository;
             _mapper = mapper;
             _messageBus = messageBus;
+            _discountService = discountService;
         }
 
         [HttpGet("{basketId}", Name = "GetBasket")]
@@ -104,7 +107,16 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
                 basketCheckoutMessage.BasketLines.Add(basketLineMessage);
             }
 
-            basketCheckoutMessage.BasketTotal = total;
+            //apply discountt by talking to the discount service
+            var discount = await _discountService.GetCoupon(basket.CouponId);
+            if (discount != null)
+            {
+                basketCheckoutMessage.BasketTotal = total - discount.Amount;
+            }
+            else
+            {
+                basketCheckoutMessage.BasketTotal = total;
+            }
 
             try
             {
@@ -117,7 +129,7 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
             }
 
             await _basketRepository.ClearBasket(basketCheckout.BasketId);
-            return Accepted();
+            return Accepted(basketCheckoutMessage);
         }
     }
 }

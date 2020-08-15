@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.ShoppingBasket.DbContexts;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace GloboTicket.Services.ShoppingBasket
 {
@@ -38,6 +38,9 @@ namespace GloboTicket.Services.ShoppingBasket
 
             services.AddHttpClient<IEventCatalogService, EventCatalogService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiConfigs:EventCatalog:Uri"]));
+
+            services.AddHttpClient<IDiscountService, DiscountService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:Discount:Uri"]));
 
             services.AddDbContext<ShoppingBasketDbContext>(options =>
             {

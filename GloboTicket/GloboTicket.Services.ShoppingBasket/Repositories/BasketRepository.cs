@@ -33,6 +33,10 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
         {
             var basketLinesToClear = _shoppingBasketDbContext.BasketLines.Where(b => b.BasketId == basketId);
             _shoppingBasketDbContext.BasketLines.RemoveRange(basketLinesToClear);
+
+            var basket = _shoppingBasketDbContext.Baskets.FirstOrDefault(b => b.BasketId == basketId);
+            if (basket != null) basket.CouponId = Guid.Empty;
+
             await SaveChanges();
         }
 

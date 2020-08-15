@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GloboTicket.Services.ShoppingBasket.Entities;
+using GloboTicket.Services.ShoppingBasket.Extensions;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GloboTicket.Services.ShoppingBasket.Entities;
-using GloboTicket.Services.ShoppingBasket.Extensions;
 
 namespace GloboTicket.Services.ShoppingBasket.Services
 {
