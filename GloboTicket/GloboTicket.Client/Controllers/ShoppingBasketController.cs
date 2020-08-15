@@ -104,7 +104,7 @@ namespace GloboTicket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
         {
-
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
             if (ModelState.IsValid)
             {
                 var basketForCheckout = new BasketForCheckout
@@ -119,8 +119,9 @@ namespace GloboTicket.Web.Controllers
                     CardNumber = basketCheckoutViewModel.CardNumber,
                     CardName = basketCheckoutViewModel.CardName,
                     CardExpiration = basketCheckoutViewModel.CardExpiration,
-                    BasketId = basketCheckoutViewModel.BasketId,
-                    UserId = basketCheckoutViewModel.UserId
+                    CvvCode = basketCheckoutViewModel.CvvCode,
+                    BasketId = basketId,
+                    UserId = settings.UserId
                 };
 
                 await basketService.Ckeckout(basketCheckoutViewModel.BasketId, basketForCheckout);

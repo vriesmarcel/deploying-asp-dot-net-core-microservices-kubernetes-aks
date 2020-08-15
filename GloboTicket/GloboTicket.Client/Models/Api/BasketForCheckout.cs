@@ -21,5 +21,6 @@ namespace GloboTicket.Web.Models.Api
         public string CardNumber { get; set; }
         public string CardName { get; set; }
         public string CardExpiration { get; set; }
+        public string CvvCode { get; set; }
     }
 }

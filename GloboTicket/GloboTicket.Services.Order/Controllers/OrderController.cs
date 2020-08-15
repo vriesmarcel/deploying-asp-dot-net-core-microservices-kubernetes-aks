@@ -16,7 +16,7 @@ namespace GloboTicket.Services.Ordering.Controllers
             _orderRepository = orderRepository;
         }
 
-        [HttpGet("/user/{userId}")]
+        [HttpGet("user/{userId}")]
         public async Task<IActionResult> List(Guid userId)
         {
             var orders = await _orderRepository.GetOrdersForUser(userId);

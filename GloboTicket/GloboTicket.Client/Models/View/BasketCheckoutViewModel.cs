@@ -32,7 +32,6 @@ namespace GloboTicket.Web.Models.View
         public string Country { get; set; }
 
 
-
         //payment information
         [Required]
         [StringLength(16)]
@@ -44,5 +43,8 @@ namespace GloboTicket.Web.Models.View
         [Required]
         [StringLength(4)]
         public string CardExpiration { get; set; }
+        [Required]
+        [StringLength(3)]
+        public string CvvCode { get; set; }
     }
 }

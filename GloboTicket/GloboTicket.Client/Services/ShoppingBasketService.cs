@@ -67,7 +67,7 @@ namespace GloboTicket.Web.Services
 
         public async Task<BasketForCheckout> Ckeckout(Guid basketId, BasketForCheckout basketForCheckout)
         {
-            var response = await client.PostAsJson($"api/baskets/{basketId}/checkout", basketForCheckout);
+            var response = await client.PostAsJson($"api/baskets/checkout", basketForCheckout);
             return await response.ReadContentAs<BasketForCheckout>();
         }
     }
