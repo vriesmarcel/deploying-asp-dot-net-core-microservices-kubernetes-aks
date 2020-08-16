@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Net.Http;
+using Polly;
+using Polly.Extensions.Http;
 
 namespace GloboTicket.Services.EventCatalog
 {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace GloboTicket.Services.Discount.Controllers
 {
@@ -30,13 +31,29 @@ namespace GloboTicket.Services.Discount.Controllers
             if (coupon == null)
                 return NotFound();
 
-            return Ok( _mapper.Map<CouponDto>(coupon));
+            return Ok(_mapper.Map<CouponDto>(coupon));
         }
 
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [HttpGet("{couponId}")]
         public async Task<IActionResult> GetDiscountForCode(Guid couponId)
         {
+
+            var coupon = await _couponRepository.GetCouponById(couponId);
+
+            if (coupon == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<CouponDto>(coupon));
+        }
+
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [HttpGet("error/{couponId}")]
+        public async Task<IActionResult> GetDiscountForCode2(Guid couponId)
+        {
+
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+
             var coupon = await _couponRepository.GetCouponById(couponId);
 
             if (coupon == null)

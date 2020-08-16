@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Net.Http;
+using Polly;
+using Polly.Extensions.Http;
 
 namespace GloboTicket.Services.ShoppingBasket
 {
@@ -40,7 +43,8 @@ namespace GloboTicket.Services.ShoppingBasket
                 c.BaseAddress = new Uri(Configuration["ApiConfigs:EventCatalog:Uri"]));
 
             services.AddHttpClient<IDiscountService, DiscountService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiConfigs:Discount:Uri"]));
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:Discount:Uri"]))
+                .AddPolicyHandler(GetRetryPolicy());
 
             services.AddDbContext<ShoppingBasketDbContext>(options =>
             {
@@ -51,6 +55,17 @@ namespace GloboTicket.Services.ShoppingBasket
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping Basket API", Version = "v1" });
             });
+        }
+
+        public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions.HandleTransientHttpError()
+                .WaitAndRetryAsync(5,
+                    retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(1.5, retryAttempt) * 1000),
+                    (_, waitingTime) =>
+                    {
+                        Console.WriteLine("Retrying due to Polly retry policy");
+                    });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
