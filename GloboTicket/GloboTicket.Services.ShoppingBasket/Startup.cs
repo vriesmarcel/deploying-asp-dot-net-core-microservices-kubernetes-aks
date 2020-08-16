@@ -60,7 +60,7 @@ namespace GloboTicket.Services.ShoppingBasket
         public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             return HttpPolicyExtensions.HandleTransientHttpError()
-                .WaitAndRetryAsync(5,
+                .WaitAndRetryAsync(3,
                     retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(1.5, retryAttempt) * 1000),
                     (_, waitingTime) =>
                     {

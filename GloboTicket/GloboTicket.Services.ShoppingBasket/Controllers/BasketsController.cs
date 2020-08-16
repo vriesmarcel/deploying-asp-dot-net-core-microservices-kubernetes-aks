@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace GloboTicket.Services.ShoppingBasket.Controllers
 {
@@ -81,64 +82,74 @@ namespace GloboTicket.Services.ShoppingBasket.Controllers
         [HttpPost("checkout")]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> CheckoutBasketAsync([FromBody] BasketCheckout basketCheckout)
         {
-            //based on basket checkout, fetch the basket lines from repo
-            var basket = await basketRepository.GetBasketById(basketCheckout.BasketId);
-
-            if (basket == null)
-            {
-                return BadRequest();
-            }
-
-            BasketCheckoutMessage basketCheckoutMessage = mapper.Map<BasketCheckoutMessage>(basketCheckout);
-            basketCheckoutMessage.BasketLines = new List<BasketLineMessage>();
-            int total = 0;
-
-            foreach (var b in basket.BasketLines)
-            {
-                var basketLineMessage = new BasketLineMessage
-                {
-                    BasketLineId = b.BasketLineId,
-                    Price = b.Price,
-                    TicketAmount = b.TicketAmount
-                };
-
-                total += b.Price * b.TicketAmount;
-
-                basketCheckoutMessage.BasketLines.Add(basketLineMessage);
-            }
-
-            //apply discountt by talking to the discount service
-            Coupon coupon = null;
-
-            //if (basket.CouponId.HasValue)
-            //    coupon = await discountService.GetCoupon(basket.CouponId.Value);
-            //
-            if (basket.CouponId.HasValue)
-                coupon = await discountService.GetCouponWithError(basket.CouponId.Value);
-
-            if (coupon != null)
-            {
-                basketCheckoutMessage.BasketTotal = total - coupon.Amount;
-            }
-            else
-            {
-                basketCheckoutMessage.BasketTotal = total;
-            }
-
             try
             {
-                await messageBus.PublishMessage(basketCheckoutMessage, "checkoutmessage");
+
+
+                //based on basket checkout, fetch the basket lines from repo
+                var basket = await basketRepository.GetBasketById(basketCheckout.BasketId);
+
+                if (basket == null)
+                {
+                    return BadRequest();
+                }
+
+                BasketCheckoutMessage basketCheckoutMessage = mapper.Map<BasketCheckoutMessage>(basketCheckout);
+                basketCheckoutMessage.BasketLines = new List<BasketLineMessage>();
+                int total = 0;
+
+                foreach (var b in basket.BasketLines)
+                {
+                    var basketLineMessage = new BasketLineMessage
+                    {
+                        BasketLineId = b.BasketLineId,
+                        Price = b.Price,
+                        TicketAmount = b.TicketAmount
+                    };
+
+                    total += b.Price * b.TicketAmount;
+
+                    basketCheckoutMessage.BasketLines.Add(basketLineMessage);
+                }
+
+                //apply discountt by talking to the discount service
+                Coupon coupon = null;
+
+                //if (basket.CouponId.HasValue)
+                //    coupon = await discountService.GetCoupon(basket.CouponId.Value);
+                //
+                if (basket.CouponId.HasValue)
+                    coupon = await discountService.GetCouponWithError(basket.CouponId.Value);
+
+                if (coupon != null)
+                {
+                    basketCheckoutMessage.BasketTotal = total - coupon.Amount;
+                }
+                else
+                {
+                    basketCheckoutMessage.BasketTotal = total;
+                }
+
+                try
+                {
+                    await messageBus.PublishMessage(basketCheckoutMessage, "checkoutmessage");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
+                await basketRepository.ClearBasket(basketCheckout.BasketId);
+                return Accepted(basketCheckoutMessage);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, e.StackTrace);
             }
-
-            await basketRepository.ClearBasket(basketCheckout.BasketId);
-            return Accepted(basketCheckoutMessage);
         }
     }
 }

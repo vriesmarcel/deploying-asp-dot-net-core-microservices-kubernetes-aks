@@ -1,5 +1,7 @@
 ﻿@model BasketCheckoutViewModel
 
+<h2 class="text-danger">@ViewBag.ErrorMessage</h2>
+
 <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
     <h4>You're just one step away from placing your order.</h4>
 

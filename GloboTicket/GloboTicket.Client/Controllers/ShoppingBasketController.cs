@@ -105,32 +105,40 @@ namespace GloboTicket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
         {
-            var basketId = Request.Cookies.GetCurrentBasketId(settings);
-            if (ModelState.IsValid)
+            try
             {
-                var basketForCheckout = new BasketForCheckout
+                var basketId = Request.Cookies.GetCurrentBasketId(settings);
+                if (ModelState.IsValid)
                 {
-                    FirstName = basketCheckoutViewModel.FirstName,
-                    LastName = basketCheckoutViewModel.LastName,
-                    Email = basketCheckoutViewModel.Email,
-                    Address = basketCheckoutViewModel.Address,
-                    ZipCode = basketCheckoutViewModel.ZipCode,
-                    City = basketCheckoutViewModel.City,
-                    Country = basketCheckoutViewModel.Country,
-                    CardNumber = basketCheckoutViewModel.CardNumber,
-                    CardName = basketCheckoutViewModel.CardName,
-                    CardExpiration = basketCheckoutViewModel.CardExpiration,
-                    CvvCode = basketCheckoutViewModel.CvvCode,
-                    BasketId = basketId,
-                    UserId = settings.UserId
-                };
+                    var basketForCheckout = new BasketForCheckout
+                    {
+                        FirstName = basketCheckoutViewModel.FirstName,
+                        LastName = basketCheckoutViewModel.LastName,
+                        Email = basketCheckoutViewModel.Email,
+                        Address = basketCheckoutViewModel.Address,
+                        ZipCode = basketCheckoutViewModel.ZipCode,
+                        City = basketCheckoutViewModel.City,
+                        Country = basketCheckoutViewModel.Country,
+                        CardNumber = basketCheckoutViewModel.CardNumber,
+                        CardName = basketCheckoutViewModel.CardName,
+                        CardExpiration = basketCheckoutViewModel.CardExpiration,
+                        CvvCode = basketCheckoutViewModel.CvvCode,
+                        BasketId = basketId,
+                        UserId = settings.UserId
+                    };
 
-                await basketService.Checkout(basketCheckoutViewModel.BasketId, basketForCheckout);
+                    await basketService.Checkout(basketCheckoutViewModel.BasketId, basketForCheckout);
 
-                return RedirectToAction("CheckoutComplete");
+                    return RedirectToAction("CheckoutComplete");
+                }
+
+                return View(basketCheckoutViewModel);
             }
-
-            return View(basketCheckoutViewModel);
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return View(basketCheckoutViewModel);
+            }
         }
 
         [HttpPost]

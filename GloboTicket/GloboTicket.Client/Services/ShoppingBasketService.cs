@@ -68,7 +68,12 @@ namespace GloboTicket.Web.Services
         public async Task<BasketForCheckout> Checkout(Guid basketId, BasketForCheckout basketForCheckout)
         {
             var response = await client.PostAsJson($"api/baskets/checkout", basketForCheckout);
-            return await response.ReadContentAs<BasketForCheckout>();
+            if(response.IsSuccessStatusCode)
+                return await response.ReadContentAs<BasketForCheckout>();
+            else
+            {
+                throw new Exception("Something went wrong placing your order. Please try again.");
+            }
         }
     }
 }
