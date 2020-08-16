@@ -18,4 +18,8 @@
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\GloboTicket.Gateway.Shared\GloboTicket.Gateway.Shared.csproj" />
+	</ItemGroup>
+
 </Project>

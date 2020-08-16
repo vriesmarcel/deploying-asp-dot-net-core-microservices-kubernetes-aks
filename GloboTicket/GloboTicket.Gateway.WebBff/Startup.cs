@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using GloboTicket.Gateway.WebBff.Url;
 
 namespace GloboTicket.Gateway.WebBff
 {
@@ -20,14 +21,14 @@ namespace GloboTicket.Gateway.WebBff
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
 
             services.AddOptions();
-            services.Configure<ServiceUrls>(configuration.GetSection("ServiceUrls"));
+            services.Configure<ServiceUrls>(Configuration.GetSection("ServiceUrls"));
 
             services.AddHttpClient<ICatalogService, CatalogService>(c =>
                 c.BaseAddress = new Uri(Configuration["ServiceUrls:EventCatalog"]));

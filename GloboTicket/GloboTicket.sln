@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Gateway.WebBff"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Gateway.MobileBff", "GloboTicket.Gateway.MobileBff\GloboTicket.Gateway.MobileBff.csproj", "{7A7E27B3-1CA8-49F8-9A14-81E11ED0EF1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.Gateway.Shared", "GloboTicket.Gateway.Shared\GloboTicket.Gateway.Shared.csproj", "{8BDC58FA-C92C-4EE0-808B-7A086B6FDA94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Web.Bff", "GloboTicket.Web.Bff\GloboTicket.Web.Bff.csproj", "{FA0F1936-AAB8-4DA7-B368-E7C305D28B46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +95,14 @@ Global
 		{7A7E27B3-1CA8-49F8-9A14-81E11ED0EF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A7E27B3-1CA8-49F8-9A14-81E11ED0EF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A7E27B3-1CA8-49F8-9A14-81E11ED0EF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BDC58FA-C92C-4EE0-808B-7A086B6FDA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BDC58FA-C92C-4EE0-808B-7A086B6FDA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BDC58FA-C92C-4EE0-808B-7A086B6FDA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BDC58FA-C92C-4EE0-808B-7A086B6FDA94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA0F1936-AAB8-4DA7-B368-E7C305D28B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0F1936-AAB8-4DA7-B368-E7C305D28B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0F1936-AAB8-4DA7-B368-E7C305D28B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0F1936-AAB8-4DA7-B368-E7C305D28B46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +120,8 @@ Global
 		{71D77F9F-0A21-4054-BB7C-A9C75062B202} = {F3632F51-056C-43C5-9E59-8D371E99C8BF}
 		{883D3C2D-9557-46B7-A993-1CD6117A731A} = {C5340063-2075-4208-B77A-2D192BC07552}
 		{7A7E27B3-1CA8-49F8-9A14-81E11ED0EF1D} = {C5340063-2075-4208-B77A-2D192BC07552}
+		{8BDC58FA-C92C-4EE0-808B-7A086B6FDA94} = {C5340063-2075-4208-B77A-2D192BC07552}
+		{FA0F1936-AAB8-4DA7-B368-E7C305D28B46} = {825D4E4F-3BFF-4546-96AB-8AB83D95722D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E1B7AE-99E6-4F8F-977C-CF0FD36BBE42}

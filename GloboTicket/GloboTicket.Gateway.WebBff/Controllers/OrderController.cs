@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace GloboTicket.Gateway.WebBff.Controllers
 {
     [ApiController]
-    public class OrderController : Controller
+    [Route("api/bffweb/order")]
+    public class OrderController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
     }
 }

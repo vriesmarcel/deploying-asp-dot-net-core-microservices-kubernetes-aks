@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GloboTicket.Gateway.WebBff.Controllers
 {
-    public class BasketController : Controller
+    [ApiController]
+    [Route("api/bffweb/basket")]
+    public class BasketController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }

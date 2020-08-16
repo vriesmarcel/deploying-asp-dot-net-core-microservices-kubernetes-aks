@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace GloboTicket.Gateway.WebBff.Controllers
 {
     [ApiController]
+    [Route("api/bffweb/discount")]
     public class DiscountController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }
