@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GloboTicket.MobileApp.Views.EventOverviewView"
-             BackgroundImage="patternwide.png"
+             
              xmlns:behaviors1="clr-namespace:GloboTicket.MobileApp.Behaviors;assembly=GloboTicket.MobileApp"
              Title="GloboTicket Events"
              >

@@ -14,7 +14,7 @@ namespace GloboTicket.MobileApp.Models
         private readonly HttpClient _httpClient;
 
         //local
-        private string baseUrl = Device.RuntimePlatform == Device.Android ? "https://10.0.2.2:5001/api/piestock" : "https://localhost:5001/api/piestock";
+        private string baseUrl = Device.RuntimePlatform == Device.Android ? "https://10.0.2.2:5001/api/events" : "https://localhost:5001/api/events";
         
         //remote
         //private const string baseUrl = 
