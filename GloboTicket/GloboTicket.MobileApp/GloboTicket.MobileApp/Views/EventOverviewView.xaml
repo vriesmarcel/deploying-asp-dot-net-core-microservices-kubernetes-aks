@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GloboTicket.MobileApp.Views.EventOverviewView"
+             BackgroundImage="patternwide.png"
              
              xmlns:behaviors1="clr-namespace:GloboTicket.MobileApp.Behaviors;assembly=GloboTicket.MobileApp"
              Title="GloboTicket Events"
@@ -9,12 +10,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Text="Load events" Command="{Binding LoadCommand}" ></Button>
-
-        <ListView HasUnevenRows="True" Grid.Row="2" ItemsSource="{Binding Events}"
+        <ListView HasUnevenRows="True" Grid.Row="1" ItemsSource="{Binding Events}"
               x:Name="EventsListView" CachingStrategy="RecycleElement"  >
             <ListView.Behaviors>
                 <behaviors1:EventToCommandBehavior 

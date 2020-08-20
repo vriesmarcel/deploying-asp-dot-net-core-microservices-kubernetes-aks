@@ -4,24 +4,8 @@
              xmlns:converter="clr-namespace:GloboTicket.MobileApp.Converter;assembly=GloboTicket.MobileApp"
              x:Class="GloboTicket.MobileApp.App">
     <Application.Resources>
-        <Color x:Key="BethanysGreenColor">#22cfa7</Color>
-        <Color x:Key="BethanysAlertColor">#e0584f</Color>
 
         <converter:ItemTappedConverter x:Key="LocalItemTappedConverter"></converter:ItemTappedConverter>
-
-        <Style x:Key="RegularButtonStyle" TargetType="Button">
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
-            <Setter Property="VerticalOptions" Value="Start"></Setter>
-            <Setter Property="BackgroundColor" Value="{StaticResource BethanysGreenColor}"></Setter>
-            <Setter Property="TextColor" Value="White"></Setter>
-        </Style>
-
-        <Style x:Key="AlertButtonStyle" TargetType="Button">
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
-            <Setter Property="VerticalOptions" Value="Start"></Setter>
-            <Setter Property="BackgroundColor" Value="{StaticResource BethanysAlertColor}"></Setter>
-            <Setter Property="TextColor" Value="White"></Setter>
-        </Style>
 
         <Style x:Key="TitleLabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="Large"></Setter>
@@ -45,7 +29,7 @@
         <Style x:Key="BaseLabelStyle" TargetType="Label">
             <Setter Property="HorizontalOptions" Value="Start"></Setter>
             <Setter Property="VerticalOptions" Value="Center"></Setter>
-            <Setter Property="TextColor" Value="DarkGray"></Setter>
+            <Setter Property="TextColor" Value="Black"></Setter>
         </Style>
 
         <Style x:Key="SmallLabelStyle" TargetType="Label" 

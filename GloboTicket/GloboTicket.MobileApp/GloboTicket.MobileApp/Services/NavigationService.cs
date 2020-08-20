@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GloboTicket.MobileApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using GloboTicket.MobileApp.ViewModels;
 using Xamarin.Forms;
 
 namespace GloboTicket.MobileApp.Services

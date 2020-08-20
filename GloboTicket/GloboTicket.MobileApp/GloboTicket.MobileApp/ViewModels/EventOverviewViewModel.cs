@@ -1,6 +1,7 @@
 ﻿using GloboTicket.MobileApp.Models;
 using GloboTicket.MobileApp.Services;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -28,24 +29,21 @@ namespace GloboTicket.MobileApp.ViewModels
             this.eventDataService = eventDataService;
             _navigationService = navigationService;
 
-            LoadCommand = new Command(OnLoadCommand);
             EventSelectedCommand = new Command<Event>(OnEventSelectedCommand);
 
             Events = new ObservableCollection<Event>();
-
         }
 
-        public ICommand LoadCommand { get; }
         public ICommand EventSelectedCommand { get; }
-
-        public async void OnLoadCommand()
-        {
-            Events = new ObservableCollection<Event>(await eventDataService.GetAllEventsAsync(false));
-        }
 
         private void OnEventSelectedCommand(Event ev)
         {
             _navigationService.NavigateTo("EventDetailView", ev);
+        }
+
+        public async Task OnAppearing()
+        {
+            Events = new ObservableCollection<Event>(await eventDataService.GetAllEventsAsync(false));
         }
     }
 }

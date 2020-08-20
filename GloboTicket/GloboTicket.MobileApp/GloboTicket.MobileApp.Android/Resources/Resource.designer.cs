@@ -10990,16 +10990,19 @@ namespace GloboTicket.MobileApp.Droid
 			public const int notify_panel_notification_icon_bg = 2131165301;
 			
 			// aapt resource value: 0x7F070076
-			public const int roundedbg = 2131165302;
+			public const int patternwide = 2131165302;
 			
 			// aapt resource value: 0x7F070077
-			public const int roundedbgdark = 2131165303;
+			public const int roundedbg = 2131165303;
 			
 			// aapt resource value: 0x7F070078
-			public const int tooltip_frame_dark = 2131165304;
+			public const int roundedbgdark = 2131165304;
 			
 			// aapt resource value: 0x7F070079
-			public const int tooltip_frame_light = 2131165305;
+			public const int tooltip_frame_dark = 2131165305;
+			
+			// aapt resource value: 0x7F07007A
+			public const int tooltip_frame_light = 2131165306;
 			
 			static Drawable()
 			{
