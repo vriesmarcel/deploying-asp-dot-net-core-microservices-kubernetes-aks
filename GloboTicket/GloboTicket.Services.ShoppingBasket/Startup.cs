@@ -52,9 +52,17 @@ namespace GloboTicket.Services.ShoppingBasket
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<ShoppingBasketDbContext>();
+                    context.Database.Migrate();
+                }
             }
 
-            app.UseHttpsRedirection();
+            if (Configuration["DOTNET_RUNNING_IN_CONTAINER"] != "true")
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseSwagger();
 

@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  globoticket.web:
+    image: ${DOCKER_REGISTRY-}globoticketweb
+    build:
+      context: .
+      dockerfile: GloboTicket.Client/Dockerfile
+    environment:
+      - ApiConfigs__EventCatalog__Uri=http://globoticket.services.eventcatalog
+      - ApiConfigs__ShoppingBasket__Uri=http://globoticket.services.shoppingbasket
+
+  globoticket.services.eventcatalog:
+    image: ${DOCKER_REGISTRY-}globoticketserviceseventcatalog
+    build:
+      context: .
+      dockerfile: GloboTicket.Services.EventCatalog/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketEventCatalogDb;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+      - DisableHttps=true
+    depends_on:
+      - db
+
+  globoticket.services.shoppingbasket:
+    image: ${DOCKER_REGISTRY-}globoticketservicesshoppingbasket
+    build:
+      context: .
+      dockerfile: GloboTicket.Services.ShoppingBasket/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketShoppingBasketDb;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+      - ApiConfigs__EventCatalog__Uri=http://globoticket.services.eventcatalog
+      - DisableHttps=true
+    depends_on:
+      - db
+  
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    expose:
+     - "1433"
+    environment:
+     - ACCEPT_EULA=Y
+     - MSSQL_SA_PASSWORD=P(ssw0rd0123)
+
