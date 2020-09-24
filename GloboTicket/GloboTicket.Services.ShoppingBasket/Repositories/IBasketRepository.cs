@@ -13,5 +13,7 @@ namespace GloboTicket.Services.ShoppingBasket.Repositories
         void AddBasket(Basket basket);
 
         Task<bool> SaveChanges();
+
+        Task ClearBasket(Guid basketId);
     }
 }

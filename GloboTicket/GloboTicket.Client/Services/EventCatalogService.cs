@@ -1,9 +1,9 @@
-﻿using System;
+﻿using GloboTicket.Web.Extensions;
+using GloboTicket.Web.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GloboTicket.Web.Extensions;
-using GloboTicket.Web.Models.Api;
 
 namespace GloboTicket.Web.Services
 {

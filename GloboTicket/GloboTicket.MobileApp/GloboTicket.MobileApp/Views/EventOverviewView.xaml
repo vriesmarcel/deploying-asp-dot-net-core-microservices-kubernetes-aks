@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GloboTicket.MobileApp.Views.EventOverviewView"
+             BackgroundImage="patternwide.png"
+             
+             xmlns:behaviors1="clr-namespace:GloboTicket.MobileApp.Behaviors;assembly=GloboTicket.MobileApp"
+             Title="GloboTicket Events"
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListView HasUnevenRows="True" Grid.Row="1" ItemsSource="{Binding Events}"
+              x:Name="EventsListView" CachingStrategy="RecycleElement"  >
+            <ListView.Behaviors>
+                <behaviors1:EventToCommandBehavior 
+                    EventName="ItemTapped" 
+                    Command="{Binding EventSelectedCommand}" 
+                    EventArgsConverter="{StaticResource LocalItemTappedConverter}" >
+                </behaviors1:EventToCommandBehavior>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid HeightRequest="100"  Margin="5" BackgroundColor="White" RowSpacing="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="125"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Row="0" HeightRequest="125" VerticalOptions="Start" Margin="2,2,1,2" Source="{Binding ImageUrl}"></Image>
+                            <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumLabelStyle}" Text="{Binding Name}" Margin="3" ></Label>
+                            <Label Grid.Row="0" Grid.Column="2" Margin="3" Text="{Binding Price}" Style="{StaticResource SmallLabelStyle}" FontAttributes="Bold" HorizontalTextAlignment="End"></Label>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

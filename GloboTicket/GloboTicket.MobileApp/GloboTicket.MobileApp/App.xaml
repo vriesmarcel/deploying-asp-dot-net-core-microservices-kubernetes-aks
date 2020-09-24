@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:GloboTicket.MobileApp.Converter;assembly=GloboTicket.MobileApp"
+             x:Class="GloboTicket.MobileApp.App">
+    <Application.Resources>
+
+        <converter:ItemTappedConverter x:Key="LocalItemTappedConverter"></converter:ItemTappedConverter>
+
+        <Style x:Key="TitleLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="FontAttributes" Value="Bold"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+        </Style>
+
+        <Style x:Key="RegularEntry" TargetType="Entry">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+        </Style>
+
+        <Style x:Key="RegularEditorStyle" TargetType="Editor">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Small"></Setter>
+        </Style>
+
+        <!-- Style inheritance -->
+        <Style x:Key="BaseLabelStyle" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Start"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="Black"></Setter>
+        </Style>
+
+        <Style x:Key="SmallLabelStyle" TargetType="Label" 
+               BasedOn="{StaticResource BaseLabelStyle}">
+            <Setter Property="FontSize" Value="Small"></Setter>
+        </Style>
+
+        <Style x:Key="MediumLabelStyle" TargetType="Label" 
+               BasedOn="{StaticResource BaseLabelStyle}">
+            <Setter Property="FontSize" Value="Medium"></Setter>
+        </Style>
+
+        <Style x:Key="LargeLabelStyle" TargetType="Label" 
+               BasedOn="{StaticResource BaseLabelStyle}">
+            <Setter Property="FontSize" Value="Large"></Setter>
+        </Style>
+    </Application.Resources>
+</Application>

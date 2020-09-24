@@ -1,5 +1,5 @@
-using System;
 using AutoMapper;
+using GloboTicket.Integration.MessagingBus;
 using GloboTicket.Services.ShoppingBasket.DbContexts;
 using GloboTicket.Services.ShoppingBasket.Repositories;
 using GloboTicket.Services.ShoppingBasket.Services;
@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Net.Http;
+using Polly;
+using Polly.Extensions.Http;
 
 namespace GloboTicket.Services.ShoppingBasket
 {
@@ -22,7 +26,6 @@ namespace GloboTicket.Services.ShoppingBasket
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -32,8 +35,16 @@ namespace GloboTicket.Services.ShoppingBasket
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IBasketLinesRepository, BasketLinesRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IBasketChangeEventRepository, BasketChangeEventRepository>();
+
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
+
             services.AddHttpClient<IEventCatalogService, EventCatalogService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiConfigs:EventCatalog:Uri"]));
+
+            services.AddHttpClient<IDiscountService, DiscountService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiConfigs:Discount:Uri"]))
+                .AddPolicyHandler(GetRetryPolicy()).AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddDbContext<ShoppingBasketDbContext>(options =>
             {
@@ -46,7 +57,6 @@ namespace GloboTicket.Services.ShoppingBasket
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -80,6 +90,24 @@ namespace GloboTicket.Services.ShoppingBasket
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions.HandleTransientHttpError()
+                .WaitAndRetryAsync(5,
+                    retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(1.5, retryAttempt) * 1000),
+                    (_, waitingTime) =>
+                    {
+                        Console.WriteLine("Retrying due to Polly retry policy");
+                    });
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(3, TimeSpan.FromSeconds(15));
         }
     }
 }

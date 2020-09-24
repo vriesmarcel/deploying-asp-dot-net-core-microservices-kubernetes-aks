@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundImage="patternwide.png"
+             x:Class="GloboTicket.MobileApp.Views.EventDetailView" 
+             Title="GloboTicket Events"
+             Padding="5">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Grid.Row="1" x:Name="EventGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="150"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="200"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".4*"></ColumnDefinition>
+                    <ColumnDefinition Width=".6*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="TitleLabel" 
+                   Text="Event management"
+                   Grid.Row="0" 
+                   Grid.Column="0" 
+                   Grid.ColumnSpan="2" 
+                   Style="{StaticResource TitleLabelStyle}"></Label>
+                <Image x:Name="EventImage" 
+                   Grid.Column="0"
+                   Grid.Row="1" 
+                   Grid.ColumnSpan="2"
+                   Source="{Binding SelectedEvent.ImageUrl}"
+                   Margin="10" 
+                   WidthRequest="200" 
+                   HeightRequest="200" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"></Image>
+                <Label Text="Event name" 
+                   Grid.Row="2" 
+                   Grid.Column="0"
+                   Style="{StaticResource SmallLabelStyle}"></Label>
+                <Entry Grid.Row="2"
+                   Grid.Column="1"
+                   Text="{Binding SelectedEvent.Name, Mode=TwoWay}"
+                   Style="{StaticResource RegularEntry}"></Entry>
+                <Label Text="Price" 
+                   Grid.Row="3" 
+                   Grid.Column="0"
+                   Style="{StaticResource SmallLabelStyle}"></Label>
+                <Entry Grid.Row="3"
+                   Grid.Column="1"
+                       Text="{Binding SelectedEvent.Price, Mode=TwoWay}"
+                   Style="{StaticResource RegularEntry}"></Entry>
+                <Label Text="Description" 
+                   Grid.Row="4" 
+                   Grid.Column="0"
+                   Style="{StaticResource SmallLabelStyle}"></Label>
+                <Editor Grid.Row="4"
+                   Grid.Column="1"
+                   Text="{Binding SelectedEvent.Description, Mode=TwoWay}" 
+                   Style="{StaticResource RegularEditorStyle}"></Editor>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using GloboTicket.Services.EventCatalog.Models;
 using GloboTicket.Services.EventCatalog.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GloboTicket.Services.EventCatalog.Controllers
 {

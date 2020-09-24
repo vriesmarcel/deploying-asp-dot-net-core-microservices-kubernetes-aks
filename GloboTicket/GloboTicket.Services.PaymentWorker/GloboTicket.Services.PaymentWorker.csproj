@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>dotnet-GloboTicket.Services.PaymentWorker-9556DB80-B1B2-49E8-B10E-88F66E6D45E5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="4.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6" />
+  </ItemGroup>
+</Project>

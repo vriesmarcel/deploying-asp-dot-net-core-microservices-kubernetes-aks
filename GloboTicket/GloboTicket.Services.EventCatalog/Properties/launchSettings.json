@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "GloboTicket.Services.TicketCatalog": {
+    "GloboTicket.Services.EventCatalog": {
       "commandName": "Project",
       "launchUrl": "swagger",
       "environmentVariables": {

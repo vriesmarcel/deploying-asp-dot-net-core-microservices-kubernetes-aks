@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "GloboTicket.Services.PaymentWorker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

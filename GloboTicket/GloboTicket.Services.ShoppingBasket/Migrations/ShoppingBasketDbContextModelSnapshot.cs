@@ -25,12 +25,38 @@ namespace GloboTicket.Services.ShoppingBasket.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CouponId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BasketId");
 
                     b.ToTable("Baskets");
+                });
+
+            modelBuilder.Entity("GloboTicket.Services.ShoppingBasket.Entities.BasketChangeEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BasketChangeType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("InsertedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BasketChangeEvents");
                 });
 
             modelBuilder.Entity("GloboTicket.Services.ShoppingBasket.Entities.BasketLine", b =>

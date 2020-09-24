@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>13a07a7f-db86-456f-8445-7ecd0be72ba7</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.ServiceBus" Version="4.1.4" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\GloboTicket.Integration.MessagingBus\GloboTicket.Integration.MessagingBus.csproj" />
+	</ItemGroup>
+
+
+</Project>
