@@ -9,16 +9,15 @@ services:
     environment:
       - ApiConfigs__EventCatalog__Uri=http://globoticket.services.eventcatalog
       - ApiConfigs__ShoppingBasket__Uri=http://globoticket.services.shoppingbasket
+    depends_on:
+      - globoticket.services.eventcatalog
+      - globoticket.services.shoppingbasket
 
   globoticket.services.eventcatalog:
     image: ${DOCKER_REGISTRY-}globoticketserviceseventcatalog
     build:
       context: .
       dockerfile: GloboTicket.Services.EventCatalog/Dockerfile
-    environment:
-      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketEventCatalogDb;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
-    depends_on:
-      - db
 
   globoticket.services.shoppingbasket:
     image: ${DOCKER_REGISTRY-}globoticketservicesshoppingbasket
@@ -26,10 +25,9 @@ services:
       context: .
       dockerfile: GloboTicket.Services.ShoppingBasket/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketShoppingBasketDb;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
       - ApiConfigs__EventCatalog__Uri=http://globoticket.services.eventcatalog
     depends_on:
-      - db
+      - globoticket.services.eventcatalog
   
   external.paymentgateway:
     image: ${DOCKER_REGISTRY-}externalpaymentgateway
@@ -64,11 +62,6 @@ services:
     build:
       context: .
       dockerfile: GloboTicket.Services.Discount/Dockerfile
-    environment:
-      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketDiscountDB;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
-    depends_on:
-      - db
-  
 
 
   globoticket.services.marketing:
@@ -78,40 +71,22 @@ services:
       dockerfile: GloboTicket.Services.Marketing/Dockerfile
     environment:
       - ApiConfigs__ShoppingBasket__Uri=http://globoticket.services.shoppingbasket
+    depends_on:
+      - globoticket.services.shoppingbasket
 
   globoticket.services.ordering:
     image: ${DOCKER_REGISTRY-}globoticketservicesordering
     build:
       context: .
       dockerfile: GloboTicket.Services.Order/Dockerfile
-    environment:
-      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketDiscountDB;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
-      - ServiceBusConnectionString=Endpoint=sb://globoticket.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Hi0hqUzgNIhGOcceT/gW4B23fHSlbVM+FPAxjq3zZTc=
-      - CheckoutMessageTopic=checkoutmessage
-      - OrderPaymentRequestMessageTopic=orderpaymentrequestmessage
-      - OrderPaymentUpdatedMessageTopic=orderpaymentupdatedmessage
-   depends_on:
-      - db
-
+  
   globoticket.services.payment:
     image: ${DOCKER_REGISTRY-}globoticketservicespayment
     build:
       context: .
       dockerfile: GloboTicket.Services.Payment/Dockerfile
-    environment:
-      - ServiceBusConnectionString=Endpoint=sb://globoticket.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Hi0hqUzgNIhGOcceT/gW4B23fHSlbVM+FPAxjq3zZTc=
-      - subscriptionName=globoticketpayment
-      - OrderPaymentRequestMessageTopic=orderpaymentrequestmessage
-      - OrderPaymentUpdatedMessageTopic=orderpaymentupdatedmessage
-   depends_on:
-      - db
 
-  db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    expose:
-     - "1433"
-    environment:
-     - ACCEPT_EULA=Y
-     - MSSQL_SA_PASSWORD=P(ssw0rd0123)
+
+
 
 
