@@ -53,12 +53,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.MobileApp", "Gl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aks", "aks", "{4EDCC06B-3FAC-4B43-8FB0-3FFE2AD21666}"
 	ProjectSection(SolutionItems) = preProject
+		aks-globoticket.gateway.mobilebff.yaml = aks-globoticket.gateway.mobilebff.yaml
+		aks-globoticket.gateway.webbff.yaml = aks-globoticket.gateway.webbff.yaml
 		aks-globoticket.services.discount.yaml = aks-globoticket.services.discount.yaml
 		aks-globoticket.services.shoppingbasket.yaml = aks-globoticket.services.shoppingbasket.yaml
 		aks-globoticket.services.payment.yaml = aks-globoticket.services.payment.yaml
 		aks-globoticket.services.ordering.yaml = aks-globoticket.services.ordering.yaml
 		aks-globoticket.services.marketing.yaml = aks-globoticket.services.marketing.yaml
 		aks-globoticket.services.eventcatalog.yaml = aks-globoticket.services.eventcatalog.yaml
+		aks-globoticket.web.yaml = aks-globoticket.web.yaml
 	EndProjectSection
 EndProject
 Global
