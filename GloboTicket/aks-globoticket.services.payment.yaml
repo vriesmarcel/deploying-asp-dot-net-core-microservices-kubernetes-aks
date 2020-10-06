@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-globoticket.services.payment
+  labels:
+    version: dev
+    product: globoticket.services.payment
+spec:
+  selector:
+    app: globoticket.services.payment
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dep-globoticket.services.payment
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: globoticket.services.payment
+    spec:
+      containers:
+      - name: globoticket.services.payment
+        terminationMessagePath: "/tmp/gamingwebapp-log"
+        image: globoticket.azurecr.io/globoticket.services.payment:__buildID__
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: https://+:443;http://+:80
+        - name:ServiceBusConnectionString
+          value: Endpoint=sb://globoticket.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Hi0hqUzgNIhGOcceT/gW4B23fHSlbVM+FPAxjq3zZTc=
+        - name:subscriptionName
+          value: globoticketpayment
+        - name:OrderPaymentRequestMessageTopic
+          value: orderpaymentrequestmessage
+        - name:OrderPaymentUpdatedMessageTopic
+          value: orderpaymentupdatedmessage       
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources:
+          limits:
+            cpu: "0.10"
+      imagePullSecrets:
+        - name: pullkey
