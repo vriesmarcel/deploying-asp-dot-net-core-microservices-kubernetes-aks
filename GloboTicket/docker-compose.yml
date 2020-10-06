@@ -85,7 +85,7 @@ services:
       context: .
       dockerfile: GloboTicket.Services.Order/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketDiscountDB;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+      - ConnectionStrings__DefaultConnection=Data Source=db;Initial Catalog=GloboTicketOrderingDB;Integrated Security=False;User ID=sa;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
       - ServiceBusConnectionString=Endpoint=sb://globoticket.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Hi0hqUzgNIhGOcceT/gW4B23fHSlbVM+FPAxjq3zZTc=
       - CheckoutMessageTopic=checkoutmessage
       - OrderPaymentRequestMessageTopic=orderpaymentrequestmessage
