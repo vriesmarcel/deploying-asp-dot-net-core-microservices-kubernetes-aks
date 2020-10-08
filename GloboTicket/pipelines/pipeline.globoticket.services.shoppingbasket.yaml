@@ -16,11 +16,12 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
-  imageRepository: 'globoticket.gateway.mobilebff'
+  imageRepository: 'globoticket.services.shoppingbasket'
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Services.ShoppingBasket/Dockerfile'
   tag: '$(Build.BuildId)'
-  
+  deploymentFile: 'aks-globoticket.services.shoppingbasket.yaml'
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -40,6 +41,38 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        buildContext: $(Build.SourcesDirectory)/GloboTicket
+        buildContext: 
         tags: |
           $(tag)
+- stage: Deploy
+  displayName: Build and push stage
+  jobs:  
+  - job: Deploy
+    displayName: Deploy to k8s
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: replacetokens@3
+      inputs:
+        rootDirectory: '$(Build.SourcesDirectory)/GloboTicket'
+        targetFiles: '$(deploymentFile)'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        useLegacyPattern: false
+        enableTelemetry: true
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '''aks-globoticket.services.shoppingbasket.yaml'''
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
+        azureSubscriptionEndpointForSecrets: 'MVPSponsorship (e57087a4-a053-48c9-8857-995316398cdc)'
+        azureContainerRegistry: 'globoticket.azurecr.io'
+        secretName: 'pullKey'
+
