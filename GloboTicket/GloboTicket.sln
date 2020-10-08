@@ -64,6 +64,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aks", "aks", "{4EDCC06B-3FA
 		aks-globoticket.web.yaml = aks-globoticket.web.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{7F8BD47A-3187-4B42-9B4D-ABB388257160}"
+	ProjectSection(SolutionItems) = preProject
+		pipelines\pipeline.gateway.mobilebff.yaml = pipelines\pipeline.gateway.mobilebff.yaml
+		pipelines\pipeline.gateway.webbff.yaml = pipelines\pipeline.gateway.webbff.yaml
+		pipelines\pipeline.globoticket.services.discount.yaml = pipelines\pipeline.globoticket.services.discount.yaml
+		pipelines\pipeline.globoticket.services.eventcatalog.yaml = pipelines\pipeline.globoticket.services.eventcatalog.yaml
+		pipelines\pipeline.globoticket.services.marketing.yaml = pipelines\pipeline.globoticket.services.marketing.yaml
+		pipelines\pipeline.globoticket.services.ordering.yaml = pipelines\pipeline.globoticket.services.ordering.yaml
+		pipelines\pipeline.globoticket.services.payment.yaml = pipelines\pipeline.globoticket.services.payment.yaml
+		pipelines\pipeline.globoticket.services.shoppingbasket.yaml = pipelines\pipeline.globoticket.services.shoppingbasket.yaml
+		pipelines\pipeline.web.yaml = pipelines\pipeline.web.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
