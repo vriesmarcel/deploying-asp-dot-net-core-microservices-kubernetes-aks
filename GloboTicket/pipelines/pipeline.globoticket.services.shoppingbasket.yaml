@@ -41,7 +41,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        buildContext: 
+        buildContext: $(Build.SourcesDirectory)/GloboTicket
         tags: |
           $(tag)
 - stage: Deploy
