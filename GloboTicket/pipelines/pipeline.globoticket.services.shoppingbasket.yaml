@@ -67,12 +67,13 @@ stages:
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'globoticket-aks'
+        namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
-        configuration: '$(deploymentFile)'
+        configuration: '$(deployentfile)'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
         azureSubscriptionEndpointForSecrets: 'MVPSponsorship (e57087a4-a053-48c9-8857-995316398cdc)'
         azureContainerRegistry: 'globoticket.azurecr.io'
         secretName: 'pullKey'
-
