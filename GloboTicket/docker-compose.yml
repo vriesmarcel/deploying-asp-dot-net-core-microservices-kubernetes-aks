@@ -90,7 +90,7 @@ services:
       - CheckoutMessageTopic=checkoutmessage
       - OrderPaymentRequestMessageTopic=orderpaymentrequestmessage
       - OrderPaymentUpdatedMessageTopic=orderpaymentupdatedmessage
-   depends_on:
+    depends_on:
       - db
 
   globoticket.services.payment:
@@ -103,7 +103,7 @@ services:
       - subscriptionName=globoticketpayment
       - OrderPaymentRequestMessageTopic=orderpaymentrequestmessage
       - OrderPaymentUpdatedMessageTopic=orderpaymentupdatedmessage
-   depends_on:
+    depends_on:
       - db
 
   db:
