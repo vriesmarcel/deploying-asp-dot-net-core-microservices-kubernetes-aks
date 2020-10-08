@@ -69,7 +69,7 @@ stages:
         connectionType: 'Kubernetes Service Connection'
         command: 'apply'
         useConfigurationFile: true
-        configuration: '''aks-globoticket.services.shoppingbasket.yaml'''
+        configuration: '$(deploymentFile)'
         secretType: 'dockerRegistry'
         containerRegistryType: 'Azure Container Registry'
         azureSubscriptionEndpointForSecrets: 'MVPSponsorship (e57087a4-a053-48c9-8857-995316398cdc)'
