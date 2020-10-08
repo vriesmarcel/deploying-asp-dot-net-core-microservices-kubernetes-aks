@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
   imageRepository: 'globoticket.gateway.mobilebff'
   containerRegistry: 'globoticket.azurecr.io'
-  dockerfilePath: 'Globoticket/GloboTicket.Gateway.MobileBff/Dockerfile'
+  dockerfilePath: 'GloboTicket/GloboTicket.Gateway.MobileBff/Dockerfile'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
