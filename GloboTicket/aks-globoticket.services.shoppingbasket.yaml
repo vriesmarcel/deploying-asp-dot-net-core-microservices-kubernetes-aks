@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globoticket.services.shoppingbasket
+  name: svc-globoticket-services-shoppingbasket
   labels:
-    version: dev
-    product: globoticket.services.shoppingbasket
+    version: prod
+    product: globoticket-services-shoppingbasket
 spec:
   selector:
-    app: globoticket.services.shoppingbasket
+    app: globoticket-services-shoppingbasket
   ports:
   - port: 80
     targetPort: 80
@@ -18,24 +18,25 @@ spec:
     protocol: TCP
     name: https
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.services.shoppingbasket
+  name: dep-globoticket-services-shoppingbasket
+  labels:
+    app: globoticket-services-shoppingbasket
 spec:
   replicas: 1
-  revisionHistoryLimit: 0
-  strategy:
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: globoticket-services-shoppingbasket
   template:
     metadata:
       labels:
-        app: globoticket.services.shoppingbasket
+        app: globoticket-services-shoppingbasket
     spec:
       containers:
-      - name: globoticket.services.shoppingbasket
-        terminationMessagePath: "/tmp/gamingwebapp-log"
-        image: globoticket.azurecr.io/globoticket.services.shoppingbasket:__buildID__
+      - name: globoticket-services-shoppingbasket
+        image: globoticket.azurecr.io/globoticket.services.shoppingbasket:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
@@ -44,7 +45,7 @@ spec:
         - name: ConnectionStrings__DefaultConnection
           value: Data Source=db;Initial Catalog=GloboTicketShoppingbasketDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
         - name: ApiConfigs__EventCatalog__Uri
-          value: http://svc-globoticket.services.eventcatalog
+          value: http://svc-globoticket-services-eventcatalog
         ports:
         - containerPort: 80
         - containerPort: 443
