@@ -76,4 +76,4 @@ stages:
         containerRegistryType: 'Azure Container Registry'
         azureSubscriptionEndpointForSecrets: 'MVPSponsorship (e57087a4-a053-48c9-8857-995316398cdc)'
         azureContainerRegistry: 'globoticket.azurecr.io'
-        secretName: 'pullKey'
+        secretName: 'pullkey'
