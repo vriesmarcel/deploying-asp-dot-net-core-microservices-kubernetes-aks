@@ -11,11 +11,11 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
-  imageRepository: 'globoticket.gateway.mobilebff'
+  imageRepository: 'globoticket.services.payment'
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Services.Payment/Dockerfile'
   tag: '$(Build.BuildId)'
-  deploymentFile: 'aks-globoticket.gateway.mobilebff.yaml'
+  deploymentFile: 'aks-globoticket.services.payment.yaml'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
