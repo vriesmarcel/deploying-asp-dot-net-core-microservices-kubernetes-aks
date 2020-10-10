@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
   imageRepository: 'globoticket.web'
   containerRegistry: 'globoticket.azurecr.io'
-  dockerfilePath: 'GloboTicket/GloboTicket.Web/Dockerfile'
+  dockerfilePath: 'GloboTicket/GloboTicket.Client/Dockerfile'
   tag: '$(Build.BuildId)'
   deploymentFile: 'aks-globoticket.web.yaml'
   # Agent VM image name
