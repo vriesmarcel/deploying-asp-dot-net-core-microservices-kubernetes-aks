@@ -34,8 +34,7 @@ spec:
     spec:
       containers:
       - name: globoticket.services.payment
-        terminationMessagePath: "/tmp/gamingwebapp-log"
-        image: globoticket.azurecr.io/globoticket.services.payment:__buildID__
+        image: globoticket.azurecr.io/globoticket.services.payment:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production

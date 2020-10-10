@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: globoticket.services.eventcatalog
-        image: globoticket.azurecr.io/globoticket.services.eventcatalog:__buildID__
+        image: globoticket.azurecr.io/globoticket.services.eventcatalog:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production

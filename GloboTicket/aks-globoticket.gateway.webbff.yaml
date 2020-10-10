@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: globoticket.gateway.webbff
-        image: globoticket.azurecr.io/globoticket.gateway.webbff:__buildID__
+        image: globoticket.azurecr.io/globoticket.gateway.webbff:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
