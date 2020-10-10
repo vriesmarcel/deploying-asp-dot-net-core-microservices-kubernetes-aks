@@ -15,6 +15,7 @@ variables:
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Gateway.MobileBff/Dockerfile'
   tag: '$(Build.BuildId)'
+  deploymentFile: 'aks-globoticket.gateway.mobilebff.yaml'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'

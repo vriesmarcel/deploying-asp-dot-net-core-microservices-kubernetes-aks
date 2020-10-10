@@ -15,7 +15,7 @@ variables:
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Services.Order/Dockerfile'
   tag: '$(Build.BuildId)'
-  
+  deploymentFile: 'aks-globoticket.services.ordering.yaml'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
