@@ -18,10 +18,10 @@ spec:
     protocol: TCP
     name: https
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.gateway.webbff
+  name: dep-globoticket-gateway-webbff
 spec:
   replicas: 1
   revisionHistoryLimit: 0
@@ -30,10 +30,10 @@ spec:
   template:
     metadata:
       labels:
-        app: globoticket.gateway.webbff
+        app: globoticket-gateway-webbff
     spec:
       containers:
-      - name: globoticket.gateway.webbff
+      - name: globoticket-gateway-webbff
         image: globoticket.azurecr.io/globoticket.gateway.webbff:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT

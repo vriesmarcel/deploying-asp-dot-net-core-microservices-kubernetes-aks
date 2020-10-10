@@ -18,10 +18,12 @@ spec:
     protocol: TCP
     name: https
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.services.payment
+  name: dep-globoticket-services-payment
+    labels:
+    app: globoticket-services-payment
 spec:
   replicas: 1
   revisionHistoryLimit: 0
@@ -30,10 +32,10 @@ spec:
   template:
     metadata:
       labels:
-        app: globoticket.services.payment
+        app: globoticket-services-payment
     spec:
       containers:
-      - name: globoticket.services.payment
+      - name: globoticket-services-payment
         image: globoticket.azurecr.io/globoticket.services.payment:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT

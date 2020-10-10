@@ -18,10 +18,11 @@ spec:
     protocol: TCP
     name: https
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.services.ordering
+  name: dep-globoticket-services-ordering
+
 spec:
   replicas: 1
   revisionHistoryLimit: 0
@@ -30,10 +31,10 @@ spec:
   template:
     metadata:
       labels:
-        app: globoticket.services.ordering
+        app: globoticket-services-ordering
     spec:
       containers:
-      - name: globoticket.services.ordering
+      - name: globoticket-services-ordering
         image: globoticket.azurecr.io/globoticket.services.ordering:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT

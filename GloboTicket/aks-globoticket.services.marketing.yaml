@@ -18,10 +18,10 @@ spec:
     protocol: TCP
     name: https
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.services.marketing
+  name: dep-globoticket-services-marketing
 spec:
   replicas: 1
   revisionHistoryLimit: 0
@@ -30,10 +30,10 @@ spec:
   template:
     metadata:
       labels:
-        app: globoticket.services.marketing
+        app: globoticket-services-marketing
     spec:
       containers:
-      - name: globoticket.services.marketing
+      - name: globoticket-services-marketing
         image: globoticket.azurecr.io/globoticket.services.marketing:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT

@@ -18,10 +18,10 @@ spec:
     protocol: TCP
     name: https
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.services.eventcatalog
+  name: dep-globoticket-services-eventcatalog
 spec:
   replicas: 1
   revisionHistoryLimit: 0
@@ -30,10 +30,10 @@ spec:
   template:
     metadata:
       labels:
-        app: globoticket.services.eventcatalog
+        app: globoticket-services-eventcatalog
     spec:
       containers:
-      - name: globoticket.services.eventcatalog
+      - name: globoticket-services-eventcatalog
         image: globoticket.azurecr.io/globoticket.services.eventcatalog:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
