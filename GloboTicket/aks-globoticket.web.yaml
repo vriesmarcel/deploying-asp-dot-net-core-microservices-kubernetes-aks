@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globoticket.web
+  name: svc-globoticket-web
   labels:
     version: dev
-    product: globoticket.web
+    product: globoticket-web
 spec:
   selector:
-    app: globoticket.web
+    app: globoticket-web
   type: LoadBalancer
   ports:
   - port: 80
@@ -42,17 +42,17 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: ApiConfigs__EventCatalog__Uri
-          value: http://svc-globoticket.services.eventcatalog
+          value: http://svc-globoticket-services-eventcatalog
         - name: ApiConfigs__ShoppingBasket__Uri
-          value: http://svc-globoticket.services.shoppingbasket
+          value: http://svc-globoticket-services-shoppingbasket
         - name: ApiConfigs__Payment__Uri
-          value: http://svc-globoticket.services.payment
+          value: http://svc-globoticket-services-payment
         - name: ApiConfigs__Ordering__Uri
-          value: http://svc-globoticket.services.ordering
+          value: http://svc-globoticket-services-ordering
         - name: ApiConfigs__Marketing__Uri
-          value: http://svc-globoticket.services.Marketing
+          value: http://svc-globoticket-services-marketing
         - name: ApiConfigs__Eventcatalog__Uri
-          value: http://svc-globoticket.services.eventcatalog
+          value: http://svc-globoticket-services-eventcatalog
         ports:
         - containerPort: 80
         - containerPort: 443

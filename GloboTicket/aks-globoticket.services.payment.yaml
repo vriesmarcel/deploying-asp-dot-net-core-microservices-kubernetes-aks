@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globoticket.services.payment
+  name: svc-globoticket-services-payment
   labels:
     version: dev
-    product: globoticket.services.payment
+    product: globoticket-services-payment
 spec:
   selector:
-    app: globoticket.services.payment
+    app: globoticket-services-payment
   ports:
   - port: 80
     targetPort: 80

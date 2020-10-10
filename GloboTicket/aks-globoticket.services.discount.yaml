@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globoticket.services.discount
+  name: svc-globoticket-services-discount
   labels:
     version: dev
-    product: globoticket.services.discount
+    product: globoticket-services-discount
 spec:
   selector:
-    app: globoticket.services.discount
+    app: globoticket-services-discount
   ports:
   - port: 80
     targetPort: 80
