@@ -24,9 +24,9 @@ metadata:
   name: dep-globoticket-services-discount
 spec:
   replicas: 1
-  revisionHistoryLimit: 0
-  strategy:
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: globoticket-services-discount
   template:
     metadata:
       labels:

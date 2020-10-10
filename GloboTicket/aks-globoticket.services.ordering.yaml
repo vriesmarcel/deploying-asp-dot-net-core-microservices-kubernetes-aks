@@ -22,12 +22,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dep-globoticket-services-ordering
-
 spec:
   replicas: 1
-  revisionHistoryLimit: 0
-  strategy:
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: globoticket-services-ordering
   template:
     metadata:
       labels:

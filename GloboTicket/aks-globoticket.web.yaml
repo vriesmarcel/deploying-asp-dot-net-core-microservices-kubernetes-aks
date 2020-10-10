@@ -22,14 +22,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globoticket.web
-  labels:
-    app: globoticket-web
+  name: dep-globoticket-web
 spec:
   replicas: 1
-  revisionHistoryLimit: 0
-  strategy:
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: globoticket-web
   template:
     metadata:
       labels:

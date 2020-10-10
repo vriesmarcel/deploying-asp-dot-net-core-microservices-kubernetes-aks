@@ -24,9 +24,9 @@ metadata:
   name: dep-globoticket-gateway-mobilebff
 spec:
   replicas: 1
-  revisionHistoryLimit: 0
-  strategy:
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: globoticket-gateway-mobilebff
   template:
     metadata:
       labels:
