@@ -40,7 +40,7 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_URLS
-          value: https://+:443;http://+:80
+          value: http://+:80
         - name: ApiConfigs__EventCatalog__Uri
           value: http://svc-globoticket.services.eventcatalog
         - name: ApiConfigs__ShoppingBasket__Uri

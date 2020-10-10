@@ -45,7 +45,7 @@ stages:
         tags: |
           $(tag)
 - stage: Deploy
-  displayName: Build and push stage
+  displayName: Deploy to k8s
   jobs:  
   - job: Deploy
     displayName: Deploy to k8s

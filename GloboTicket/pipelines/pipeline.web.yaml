@@ -11,11 +11,11 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
-  imageRepository: 'globoticket.gateway.mobilebff'
+  imageRepository: 'globoticket.web'
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Web/Dockerfile'
   tag: '$(Build.BuildId)'
-  
+  deploymentFile: 'aks-globoticket.web.yaml'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -38,3 +38,35 @@ stages:
         buildContext: $(Build.SourcesDirectory)/GloboTicket
         tags: |
           $(tag)
+- stage: Deploy
+  displayName: Deploy to k8s
+  jobs:  
+  - job: Deploy
+    displayName: Deploy to k8s
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: replacetokens@3
+      inputs:
+        rootDirectory: '$(Build.SourcesDirectory)/GloboTicket'
+        targetFiles: '$(deploymentFile)'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+        useLegacyPattern: false
+        enableTelemetry: true
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'globoticket-aks'
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '$(Build.SourcesDirectory)/GloboTicket/$(deploymentFile)'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
+        azureSubscriptionEndpointForSecrets: 'MVPSponsorship (e57087a4-a053-48c9-8857-995316398cdc)'
+        azureContainerRegistry: 'globoticket.azurecr.io'

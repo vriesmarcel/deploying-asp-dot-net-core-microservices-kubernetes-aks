@@ -40,7 +40,7 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_URLS
-          value: https://+:443;http://+:80
+          value: http://+:80
         - name: ConnectionStrings__DefaultConnection
           value: Data Source=db;Initial Catalog=GloboTicketDiscountDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
         ports:
