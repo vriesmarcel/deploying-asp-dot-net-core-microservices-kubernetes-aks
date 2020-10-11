@@ -43,7 +43,7 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: ConnectionStrings__DefaultConnection
-          value: Data Source=db;Initial Catalog=GloboTicketShoppingbasketDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+          value: Data Source=tcp:globoticket.database.windows.net,1433;Initial Catalog=GloboTicketShoppingbasketDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
         - name: ApiConfigs__EventCatalog__Uri
           value: http://svc-globoticket-services-eventcatalog
         ports:

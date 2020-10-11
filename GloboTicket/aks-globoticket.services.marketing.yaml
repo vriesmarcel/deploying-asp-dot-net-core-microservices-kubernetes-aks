@@ -43,7 +43,7 @@ spec:
         - name: ApiConfigs__ShoppingBasket__Uri
           value: http://svc-globoticket-services-shoppingbasket
         - name: ConnectionStrings__DefaultConnection
-          value: Data Source=db;Initial Catalog=GloboTicketMarketingDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+          value: Data Source=tcp:globoticket.database.windows.net,1433;Initial Catalog=GloboTicketMarketingDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
         ports:
         - containerPort: 80
         - containerPort: 443
