@@ -53,6 +53,8 @@ spec:
           value: http://svc-globoticket-services-marketing
         - name: ApiConfigs__Eventcatalog__Uri
           value: http://svc-globoticket-services-eventcatalog
+        - name:  ApiConfigs__Discount__Uri
+          value: http://svc-globoticket-services-discount
         ports:
         - containerPort: 80
         - containerPort: 443
