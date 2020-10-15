@@ -3,8 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
-
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - GloboTicket/GloboTicket.Services.EventCatalog/*
+    - GloboTicket/aks-globoticket.services.eventcatalog.yaml
 resources:
 - repo: self
 

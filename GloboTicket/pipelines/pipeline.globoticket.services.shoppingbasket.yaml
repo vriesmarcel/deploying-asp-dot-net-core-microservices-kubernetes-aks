@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - GloboTicket/GloboTicket.Services.ShoppingBasket/*
+    - GloboTicket/aks-globoticket.services.shoppingbasket.yaml
 
 resources:
 - repo: self
