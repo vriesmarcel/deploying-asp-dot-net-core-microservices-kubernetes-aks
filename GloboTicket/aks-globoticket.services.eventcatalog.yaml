@@ -41,7 +41,10 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: ConnectionStrings__DefaultConnection
-          value: Data Source=tcp:globoticket.database.windows.net,1433;Initial Catalog=GloboTicketEventcatalogDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+          valueFrom: 
+            secretKeyRef:
+              name: eventcatalog-db
+              value: connectionstring
         ports:
         - containerPort: 80
         - containerPort: 443
