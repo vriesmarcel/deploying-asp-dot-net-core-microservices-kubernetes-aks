@@ -47,6 +47,14 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'globoticket-aks'
+        namespace: 'default'
+        command: 'create'
+        arguments: 'secret generic eventcatalog-db --from-literal=connectionstring=$(eventcatalog-connectionstring)'
+ 
     - task: replacetokens@3
       inputs:
         rootDirectory: '$(Build.SourcesDirectory)/GloboTicket'
