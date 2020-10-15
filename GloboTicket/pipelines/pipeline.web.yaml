@@ -3,7 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
+  branches:
+    include:
+    - containarized_aks_allup
+  paths:
+    include:
+    - GloboTicket/GloboTicket.Client/*
+    - GloboTicket/aks-globoticket.web.yaml
 
 resources:
 - repo: self
