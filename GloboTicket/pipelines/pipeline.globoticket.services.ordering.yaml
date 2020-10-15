@@ -3,7 +3,6 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-trigger:
   branches:
     include:
     - containarized_aks_allup
