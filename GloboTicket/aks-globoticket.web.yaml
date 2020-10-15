@@ -47,7 +47,7 @@ spec:
           value: http://svc-globoticket-services-shoppingbasket
         - name: ApiConfigs__Payment__Uri
           value: http://svc-globoticket-services-payment
-        - name: ApiConfigs__Ordering__Uri
+        - name: ApiConfigs__Order__Uri
           value: http://svc-globoticket-services-ordering
         - name: ApiConfigs__Marketing__Uri
           value: http://svc-globoticket-services-marketing

@@ -46,12 +46,14 @@ spec:
           value: http://svc-globoticket-services-shoppingbasket
         - name: ApiConfigs__Payment__Uri
           value: http://svc-globoticket-services-payment
-        - name: ApiConfigs__Ordering__Uri
+        - name: ApiConfigs__Order__Uri
           value: http://svc-globoticket-services-ordering
         - name: ApiConfigs__Marketing__Uri
           value: http://svc-globoticket-services-marketing
         - name: ApiConfigs__Eventcatalog__Uri
           value: http://svc-globoticket-services-eventcatalog
+        - name:  ApiConfigs__Discount__Uri
+          value: http://svc-globoticket-services-discount
         ports:
         - containerPort: 80
         - containerPort: 443
