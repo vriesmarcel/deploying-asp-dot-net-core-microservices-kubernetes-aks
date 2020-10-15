@@ -44,7 +44,7 @@ spec:
           valueFrom: 
             secretKeyRef:
               name: eventcatalog-db
-              value: connectionstring
+              key: connectionstring
         ports:
         - containerPort: 80
         - containerPort: 443
