@@ -55,6 +55,6 @@ spec:
         - containerPort: 443
         resources:
           limits:
-            cpu: "0.10"
+            cpu: "0.15"
       imagePullSecrets:
         - name: pullkey
