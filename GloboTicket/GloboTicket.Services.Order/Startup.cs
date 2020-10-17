@@ -60,6 +60,11 @@ namespace GloboTicket.Services.Ordering
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<OrderDbContext>();
+                    context.Database.Migrate();
+                }
             }
 
             app.UseHttpsRedirection();
