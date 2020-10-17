@@ -26,6 +26,7 @@ services:
       dockerfile: GloboTicket.Services.ShoppingBasket/Dockerfile
     environment:
       - ApiConfigs__EventCatalog__Uri=http://globoticket.services.eventcatalog
+      - ApiConfigs__Discount__Uri=http://globoticket.services.discount
     depends_on:
       - globoticket.services.eventcatalog
   
