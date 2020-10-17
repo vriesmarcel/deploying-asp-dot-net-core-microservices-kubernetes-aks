@@ -42,6 +42,11 @@ namespace GloboTicket.Services.Discount
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<DiscountDbContext>();
+                    context.Database.Migrate();
+                }
             }
 
             if (Configuration["DOTNET_RUNNING_IN_CONTAINER"] != "true")

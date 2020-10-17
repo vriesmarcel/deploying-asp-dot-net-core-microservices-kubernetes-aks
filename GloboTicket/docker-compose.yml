@@ -9,9 +9,16 @@ services:
     environment:
       - ApiConfigs__EventCatalog__Uri=http://globoticket.services.eventcatalog
       - ApiConfigs__ShoppingBasket__Uri=http://globoticket.services.shoppingbasket
+      - ApiConfigs__Discount__Uri=http://globoticket.services.discount
+      - ApiConfigs__Order__Uri=http://globoticket.services.ordering
+      - ApiConfigs__Marketing__Uri=http://globoticket.services.marketing
     depends_on:
       - globoticket.services.eventcatalog
       - globoticket.services.shoppingbasket
+      - globoticket.services.discount
+      - globoticket.services.ordering
+      - globoticket.services.marketing
+
 
   globoticket.services.eventcatalog:
     image: ${DOCKER_REGISTRY-}globoticketserviceseventcatalog
