@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Shoppi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.EventCatalog", "GloboTicket.Services.EventCatalog\GloboTicket.Services.EventCatalog.csproj", "{E2C27A67-A664-4501-8045-C71F13924979}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Marketing", "GloboTicket.Services.Marketing\GloboTicket.Services.Marketing.csproj", "{D230B20E-4C90-4BC4-A3FE-0B1AB7D02380}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Services.Discount", "GloboTicket.Services.Discount\GloboTicket.Services.Discount.csproj", "{CBD08DF7-C1FA-4670-A265-827259E45867}"
@@ -97,18 +95,6 @@ Global
 		{E2C27A67-A664-4501-8045-C71F13924979}.Release|iPhone.Build.0 = Release|Any CPU
 		{E2C27A67-A664-4501-8045-C71F13924979}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{E2C27A67-A664-4501-8045-C71F13924979}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Release|iPhone.Build.0 = Release|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{EB7D7D3B-DA1A-4C16-92CA-8DD4FCBECB94}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{D230B20E-4C90-4BC4-A3FE-0B1AB7D02380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D230B20E-4C90-4BC4-A3FE-0B1AB7D02380}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D230B20E-4C90-4BC4-A3FE-0B1AB7D02380}.Debug|iPhone.ActiveCfg = Debug|Any CPU
