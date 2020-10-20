@@ -22,6 +22,8 @@ variables:
   dockerfilePath: 'GloboTicket/GloboTicket.Client/Dockerfile'
   tag: '$(Build.BuildId)'
   deploymentFile: 'aks-globoticket.web.yaml'
+  trivyVersion: 0.12.0
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
