@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   globoticket.web:
-    image: globoticketacr.azurecr.io/globoticket.web:1
+    image: globoticketacr.azurecr.io/globoticket.web:2
  
   globoticket.services.eventcatalog:
     image: globoticketacr.azurecr.io/globoticket.services.eventcatalog:1

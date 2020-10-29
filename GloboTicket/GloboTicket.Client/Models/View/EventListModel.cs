@@ -10,5 +10,6 @@ namespace GloboTicket.Web.Models.View
         public Guid SelectedCategory { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public int NumberOfItems { get; set; }
+        public string MachineName { get; set; }
     }
 }
