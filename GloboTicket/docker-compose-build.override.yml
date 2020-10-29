@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  globoticket.web:
+    image: globoticketacr.azurecr.io/globoticket.web:1
+ 
+  globoticket.services.eventcatalog:
+    image: globoticketacr.azurecr.io/globoticket.services.eventcatalog:1
+
+  globoticket.services.shoppingbasket:
+    image: globoticketacr.azurecr.io/globoticket.services.shoppingbasket:1
+  
+  external.paymentgateway:
+    image: globoticketacr.azurecr.io/external.paymentgateway:1
+  
+  globoticket.web.bff:
+    image: globoticketacr.azurecr.io/globoticket.web.bff:1
+  
+  globoticket.gateway.mobilebff:
+    image: globoticketacr.azurecr.io/globoticket.gateway.mobilebff:1
+  
+  globoticket.gateway.webbff:
+    image: globoticketacr.azurecr.io/globoticket.gateway.webbff:1
+  
+  globoticket.services.discount:
+    image: globoticketacr.azurecr.io/globoticket.services.discount:1
+  
+  globoticket.services.marketing:
+    image: globoticketacr.azurecr.io/globoticket.services.marketing:1
+  
+  globoticket.services.ordering:
+    image: globoticketacr.azurecr.io/globoticket.services.ordering:1
+  
+  globoticket.services.payment:
+    image: globoticketacr.azurecr.io/globoticket.services.payment:1
+  

@@ -1,0 +1,50 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: svc-globoticket-services-eventcatalog
+  labels:
+    version: dev
+    product: globoticket-services-eventcatalog
+spec:
+  selector:
+    app: globoticket-services-eventcatalog
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-globoticket-services-eventcatalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: globoticket-services-eventcatalog
+  template:
+    metadata:
+      labels:
+        app: globoticket-services-eventcatalog
+    spec:
+      containers:
+      - name: globoticket-services-eventcatalog
+        image: marcelv/globoticket.services.eventcatalog:100
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom: 
+            secretKeyRef:
+              name: eventcatalog-db
+              key: connectionstring
+        ports:
+        - containerPort: 80
+        - containerPort: 443
