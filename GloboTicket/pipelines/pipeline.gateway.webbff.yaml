@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
+  dockerRegistryServiceConnection: '86a9c183-a3b0-48e6-931a-4358122f8d06'
   imageRepository: 'globoticket.gateway.webbff'
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Gateway.WebBff/Dockerfile'
