@@ -16,12 +16,14 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '032cae4e-f824-43d8-9c82-19dfc51c4179'
+  dockerRegistryServiceConnection: '86a9c183-a3b0-48e6-931a-4358122f8d06'
   imageRepository: 'globoticket.web'
   containerRegistry: 'globoticket.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Client/Dockerfile'
   tag: '$(Build.BuildId)'
   deploymentFile: 'aks-globoticket.web.yaml'
+  trivyVersion: 0.12.0
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -35,15 +37,40 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build the container image
       inputs:
-        command: buildAndPush
+        command: build
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        buildContext: $(Build.SourcesDirectory)/GloboTicket
+        tags: |
+          $(tag)
+    - script: |
+        sudo apt-get install rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
+        sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
+        trivy -v
+      displayName: 'Download and install Trivy'
+    - task: CmdLine@2
+      displayName: "Run trivy container security scan"
+      inputs:
+        script: |
+            trivy image --exit-code 0 --severity LOW,MEDIUM $(imageRepository):$(tag)
+            trivy image --exit-code 1 --severity HIGH,CRITICAL $(imageRepository):$(tag)
+    - script: |
+        sudo docker tag $(imageRepository):$(tag) $(containerRegistry/$(imageRepository):$(tag)
+      displayName: 'Tag container image before push'
+    - task: Docker@2
+      displayName: Push the scanned image to container registry
+      inputs:
+        command: push
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         buildContext: $(Build.SourcesDirectory)/GloboTicket
         tags: |
           $(tag)
+    
 - stage: Deploy
   displayName: Deploy to k8s
   jobs:  
