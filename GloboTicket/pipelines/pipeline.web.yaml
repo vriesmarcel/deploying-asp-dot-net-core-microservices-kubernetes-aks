@@ -42,11 +42,11 @@ stages:
         command: build
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
         buildContext: $(Build.SourcesDirectory)/GloboTicket
         tags: |
           $(tag)
-    
+
+
     - script: |
         sudo docker images
     
