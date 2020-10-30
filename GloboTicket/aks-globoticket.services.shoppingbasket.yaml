@@ -36,14 +36,17 @@ spec:
     spec:
       containers:
       - name: globoticket-services-shoppingbasket
-        image: globoticket.azurecr.io/globoticket.services.shoppingbasket:#{Build.BuildId}#
+        image: globoticketacr.azurecr.io/globoticket.services.shoppingbasket:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: ConnectionStrings__DefaultConnection
-          value: Data Source=tcp:globoticket.database.windows.net,1433;Initial Catalog=GloboTicketShoppingbasketDB;Integrated Security=False;User ID=globoticket-user;Password=P(ssw0rd0123);Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;
+          valueFrom: 
+            secretKeyRef:
+              name: shoppingbasket-db
+              key: connectionstring
         - name: ApiConfigs__EventCatalog__Uri
           value: http://svc-globoticket-services-eventcatalog
         ports:
@@ -53,4 +56,4 @@ spec:
           limits:
             cpu: "0.10"
       imagePullSecrets:
-        - name: pullkey
+        - name: acr-secret

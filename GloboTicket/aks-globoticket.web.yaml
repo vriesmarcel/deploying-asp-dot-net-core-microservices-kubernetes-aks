@@ -24,7 +24,13 @@ kind: Deployment
 metadata:
   name: dep-globoticket-web
 spec:
-  replicas: 1
+  replicas: 10
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   selector:
     matchLabels:
       app: globoticket-web
@@ -35,7 +41,7 @@ spec:
     spec:
       containers:
       - name: globoticket-web
-        image: globoticket.azurecr.io/globoticket.web:#{Build.BuildId}#
+        image: globoticketacr.azurecr.io/globoticket.web:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
@@ -62,4 +68,4 @@ spec:
           limits:
             cpu: "0.15"
       imagePullSecrets:
-        - name: pullkey
+        - name: acr-secret

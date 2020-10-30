@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: globoticket-services-payment
-        image: globoticket.azurecr.io/globoticket.services.payment:#{Build.BuildId}#
+        image: globoticketacr.azurecr.io/globoticket.services.payment:#{Build.BuildId}#
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
@@ -55,4 +55,4 @@ spec:
           limits:
             cpu: "0.10"
       imagePullSecrets:
-        - name: pullkey
+        - name: acr-secret
