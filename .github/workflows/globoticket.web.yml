@@ -32,6 +32,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{env.GITHUB_RUN_ID}}
+        tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
         file: ${{env.dockerfilePath}}
-        context: ${{env.GITHUB_WORKSPACE}}/GloboTicket
+        context: ${{github.workspace}}/GloboTicket
