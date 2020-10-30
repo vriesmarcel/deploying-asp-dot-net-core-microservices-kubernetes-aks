@@ -1,4 +1,4 @@
-name: .NET Core
+name: globoticket.gateway.webbff
 
 on:
   push:

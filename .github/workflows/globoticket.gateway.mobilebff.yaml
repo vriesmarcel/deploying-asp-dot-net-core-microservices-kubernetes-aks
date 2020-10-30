@@ -1,4 +1,4 @@
-name: .NET Core
+name: globoticket.gateway.mobilebff
 
 on:
   push:
@@ -52,3 +52,28 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+  deploy:
+
+    runs-on: ubuntu-latest
+    env:
+      imageRepository: 'globoticket.gateway.mobilebff.yaml'
+      containerRegistry: 'globoticketacr.azurecr.io'
+      dockerfilePath: 'GloboTicket/GloboTicket.Gateway.Mobilebff/Dockerfile'
+      deploymentFile: 'aks-globoticket.gateway.mobilebff.yaml'
+    
+    steps:
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:
+          files: ${{env.deploymentFile}}
+        env: 
+          Build.BuildId: ${{github.run_number}}
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{secrets.KUBECONFIG}} 
+        id: setcontext
+      - uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+              ${{env.deploymentFile}}
