@@ -45,11 +45,6 @@ stages:
         buildContext: $(Build.SourcesDirectory)/GloboTicket
         tags: |
           $(tag)
-
-
-    - script: |
-        sudo docker images
-    
     - script: |
         sudo apt-get install rpm
         wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
@@ -62,6 +57,9 @@ stages:
         script: |
             trivy image --exit-code 0 --severity LOW,MEDIUM $(imageRepository):$(tag)
             trivy image --exit-code 1 --severity HIGH,CRITICAL $(imageRepository):$(tag)
+    - script: |
+        sudo docker tag $(imageRepository):$(tag) $(containerRegistry/$(imageRepository):$(tag)
+      displayName: 'Tag container image before push'
     - task: Docker@2
       displayName: Push the scanned image to container registry
       inputs:
