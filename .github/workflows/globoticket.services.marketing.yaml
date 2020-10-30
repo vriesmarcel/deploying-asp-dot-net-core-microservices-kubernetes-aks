@@ -1,4 +1,4 @@
-name: .NET Core
+name: globoticket.services.marketing
 
 on:
   push:
@@ -52,15 +52,7 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-  deploy:
 
-    runs-on: ubuntu-latest
-    env:
-      imageRepository: 'globoticket.services.marketing'
-      containerRegistry: 'globoticketacr.azurecr.io'
-      dockerfilePath: 'GloboTicket/GloboTicket.Services.Marketing/Dockerfile'
-      deploymentFile: 'aks-globoticket.services.marketing.yaml'
-    
     steps:
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0

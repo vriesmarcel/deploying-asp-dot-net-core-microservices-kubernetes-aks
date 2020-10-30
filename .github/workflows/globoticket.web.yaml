@@ -52,20 +52,12 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-  deploy:
-
-    runs-on: ubuntu-latest
-    env:
-      imageRepository: 'globoticket.web'
-      containerRegistry: 'globoticketacr.azurecr.io'
-      dockerfilePath: 'GloboTicket/GloboTicket.Client/Dockerfile'
-      deploymentFile: 'aks-globoticket.web.yaml'
     
     steps:
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
-          files: ${{env.deploymentFile}}
+          files: ${{github.workspace}}/GloboTicket/${{env.deploymentFile}}
         env: 
           Build.BuildId: ${{github.run_number}}
       - uses: azure/k8s-set-context@v1
@@ -76,4 +68,4 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-              ${{env.deploymentFile}}
+              ${{github.workspace}}/GloboTicket/${{env.deploymentFile}}
