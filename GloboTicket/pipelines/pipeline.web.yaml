@@ -18,7 +18,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '86a9c183-a3b0-48e6-931a-4358122f8d06'
   imageRepository: 'globoticket.web'
-  containerRegistry: 'globoticket.azurecr.io'
+  containerRegistry: 'globoticketacr.azurecr.io'
   dockerfilePath: 'GloboTicket/GloboTicket.Client/Dockerfile'
   tag: '$(Build.BuildId)'
   deploymentFile: 'aks-globoticket.web.yaml'
@@ -58,7 +58,7 @@ stages:
             trivy image --exit-code 0 --severity LOW,MEDIUM $(imageRepository):$(tag)
             trivy image --exit-code 1 --severity HIGH,CRITICAL $(imageRepository):$(tag)
     - script: |
-        sudo docker tag $(imageRepository):$(tag) $(containerRegistry/$(imageRepository):$(tag)
+        sudo docker tag $(imageRepository):$(tag) $(containerRegistry)/$(imageRepository):$(tag)
       displayName: 'Tag container image before push'
     - task: Docker@2
       displayName: Push the scanned image to container registry
