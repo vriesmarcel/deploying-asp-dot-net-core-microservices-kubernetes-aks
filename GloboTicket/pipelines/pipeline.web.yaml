@@ -79,6 +79,7 @@ stages:
         tokenSuffix: '}#'
         useLegacyPattern: false
         enableTelemetry: true
+    
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
