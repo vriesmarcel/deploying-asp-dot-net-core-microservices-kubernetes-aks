@@ -45,6 +45,20 @@ stages:
         buildContext: $(Build.SourcesDirectory)/GloboTicket
         tags: |
           $(tag)
+
+    - script: |
+        sudo apt-get install rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
+        sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
+        trivy -v
+      displayName: 'Download and install Trivy'
+    - task: CmdLine@2
+      displayName: "Run trivy container security scan"
+      inputs:
+        script: |
+            trivy image --exit-code 0 --severity LOW,MEDIUM $(imageRepository):$(tag)
+            trivy image --exit-code 1 --severity HIGH,CRITICAL $(imageRepository):$(tag)
+    
     - script: |
         sudo docker tag $(imageRepository):$(tag) $(containerRegistry)/$(imageRepository):$(tag)
       displayName: 'Tag container image before push'
@@ -79,6 +93,7 @@ stages:
         tokenSuffix: '}#'
         useLegacyPattern: false
         enableTelemetry: true
+    
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
