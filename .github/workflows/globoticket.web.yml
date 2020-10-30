@@ -39,7 +39,7 @@ jobs:
         image-ref: '${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}'
         exit-code: '1'
         ignore-unfixed: true
-        severity: 'CRITICAL,HIGH'
+        severity: 'MEDIUM,CRITICAL,HIGH'
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
