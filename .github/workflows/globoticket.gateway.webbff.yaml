@@ -77,9 +77,3 @@ jobs:
         with:
           manifests: |
               ${{env.deploymentFile}}
-
-        
-          
-          
-          
-          :  
