@@ -6,7 +6,7 @@
     ).ToList();
     categoryListItems.Insert(0, new SelectListItem { Text = "All" });
 }
-
+<div>Machine Name: @Model.MachineName</div>
 <div class="row mt-5 mb-3">
     <form asp-action="SelectCategory" method="post">
         <select asp-for="SelectedCategory" asp-items="categoryListItems"></select>

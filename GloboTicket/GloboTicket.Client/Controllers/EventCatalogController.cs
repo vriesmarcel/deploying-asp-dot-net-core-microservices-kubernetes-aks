@@ -37,14 +37,15 @@ namespace GloboTicket.Web.Controllers
             await Task.WhenAll(new Task[] { getBasket, getCategories, getEvents });
 
             var numberOfItems = getBasket.Result?.NumberOfItems ?? 0;
-
+            var machineName = System.Environment.MachineName;
             return View(
                 new EventListModel
                 {
                     Events = getEvents.Result,
                     Categories = getCategories.Result,
                     NumberOfItems = numberOfItems,
-                    SelectedCategory = categoryId
+                    SelectedCategory = categoryId,
+                    MachineName = machineName
                 }
             );
         }
