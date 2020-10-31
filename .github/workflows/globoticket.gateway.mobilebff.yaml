@@ -4,12 +4,12 @@ on:
   push:
     branches: [ containarized_aks_allup ]
     paths:
-    - 'GloboTicket/GloboTicket.Services.Mobilebff/**'
+    - 'GloboTicket/GloboTicket.Services.MobileBff/**'
     - 'GloboTicket/aks-globoticket.services.mobilebff.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
     paths:
-    - 'GloboTicket/GloboTicket.Services.Mobilebff/**'
+    - 'GloboTicket/GloboTicket.Services.MobileBff/**'
     - 'GloboTicket/aks-globoticket.services.mobilebff.yaml'
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
     env:
       imageRepository: 'globoticket.gateway.mobilebff'
       containerRegistry: 'globoticketacr.azurecr.io'
-      dockerfilePath: 'GloboTicket/GloboTicket.Gateway.Mobilebff/Dockerfile'
+      dockerfilePath: 'GloboTicket/GloboTicket.Gateway.MobileBff/Dockerfile'
       deploymentFile: 'aks-globoticket.gateway.mobilebff.yaml'
       trivyVersion: 0.12.0
     
