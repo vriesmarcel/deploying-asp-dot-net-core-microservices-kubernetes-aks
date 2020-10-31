@@ -3,8 +3,14 @@ name: globoticket.services.marketing
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Marketing/**'
+    - 'GloboTicket/aks-globoticket.services.marketing.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Marketing/**'
+    - 'GloboTicket/aks-globoticket.services.marketing.yaml'
 
 jobs:
   build:

@@ -3,9 +3,14 @@ name: globoticket.services.shoppingbasket
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.ShoppingBasket/**'
+    - 'GloboTicket/aks-globoticket.services.shoppingbasket.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
-
+    paths:
+    - 'GloboTicket/GloboTicket.Services.ShoppingBasket/**'
+    - 'GloboTicket/aks-globoticket.services.shoppingbasket.yaml'
 jobs:
   build:
 
