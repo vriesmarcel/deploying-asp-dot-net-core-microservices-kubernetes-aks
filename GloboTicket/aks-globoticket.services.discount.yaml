@@ -43,7 +43,7 @@ spec:
         - name: ConnectionStrings__DefaultConnection
           valueFrom: 
             secretKeyRef:
-              name: dicount-db
+              name: discount-db
               key: connectionstring
         ports:
         - containerPort: 80
