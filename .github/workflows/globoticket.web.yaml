@@ -40,24 +40,22 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker build -t ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}} -f ${{env.dockerfilePath}} ${{github.workspace}}/GloboTicket
-  
-    - name: install trivy scanning
-      run: |
-        sudo apt-get install rpm
-        wget https://github.com/aquasecurity/trivy/releases/download/v${{env.trivyVersion}}/trivy_${{env.trivyVersion}}_Linux-64bit.deb
-        sudo dpkg -i trivy_${{env.trivyVersion}}_Linux-64bit.deb
-        trivy -v
 
-    - name: Run container scanner for known vulnerabilities
-      run: |
-            trivy image --exit-code 1 --severity LOW,MEDIUM,HIGH,CRITICAL --format template --template "${{github.workspace}}/.github/workflows/sarif.tpl" -o sarif.report.test ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+        format: 'template'
+        template: '${{github.workspace}}/.github/workflows/sarif.tpl'
+        output: 'trivy-results.sarif'
+        exitcode: 1
 
     - name: Upload Trivy scan results to GitHub Security tab
       if: ${{ always() }}
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: 'sarif.report.test'
-    
+        sarif_file: 'trivy-results.sarif'
+
     - name: Push image to ACR
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
