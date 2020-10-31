@@ -48,7 +48,7 @@ jobs:
         format: 'template'
         template: '${{github.workspace}}/.github/workflows/sarif.tpl'
         output: 'trivy-results.sarif'
-        exit-code: 1
+        exit-code: 0
 
     - name: Upload Trivy scan results to GitHub Security tab
       if: ${{ always() }}
