@@ -4,11 +4,13 @@ on:
   push:
     branches: [ containarized_aks_allup ]
     paths:
+    - '.github/workflows/globoticket.web.yaml'
     - 'GloboTicket/GloboTicket.Client/**'
     - 'GloboTicket/aks-globoticket.web.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
     paths:
+    - '.github/workflows/globoticket.web.yaml'
     - 'GloboTicket/GloboTicket.Client/**'
     - 'GloboTicket/aks-globoticket.web.yaml'
 
@@ -38,22 +40,18 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker build -t ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}} -f ${{env.dockerfilePath}} ${{github.workspace}}/GloboTicket
+  
+    - name: install trivy scanning
+      run: |
+        sudo apt-get install rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v${{env.trivyVersion}}/trivy_${{env.trivyVersion}}_Linux-64bit.deb
+        sudo dpkg -i trivy_${{env.trivyVersion}}_Linux-64bit.deb
+        trivy -v
 
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: '${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}'
-        exit-code: '1'
-        ignore-unfixed: true
-        severity: 'MEDIUM,CRITICAL,HIGH'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
-
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: 'trivy-results.sarif'
+    - name: Run container scanner for known vulnerabilities
+      run: |
+            trivy image --exit-code 0 --severity LOW,MEDIUM  ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+            trivy image --exit-code 1 --severity HIGH,CRITICAL ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
 
     - name: Push image to ACR
       run: |
