@@ -3,9 +3,14 @@ name: globoticket.services.discount
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Discount/**'
+    - 'GloboTicket/aks-globoticket.services.discount.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
-
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Discount/**'
+    - 'GloboTicket/aks-globoticket.services.discount.yaml'
 jobs:
   build:
 
