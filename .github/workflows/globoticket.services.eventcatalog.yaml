@@ -4,11 +4,13 @@ on:
   push:
     branches: [ zero_downtime_dbchange ]
     paths:
+    - '.github/workflows/globoticket.services.eventcatalog.yaml'
     - 'GloboTicket/GloboTicket.Services.Eventcatalog/**'
     - 'GloboTicket/aks-globoticket.services.eventcatalog.yaml'
   pull_request:
     branches: [ zero_downtime_dbchange ]
     paths:
+    - '.github/workflows/globoticket.services.eventcatalog.yaml'
     - 'GloboTicket/GloboTicket.Services.Eventcatalog/**'
     - 'GloboTicket/aks-globoticket.services.eventcatalog.yaml'
 
