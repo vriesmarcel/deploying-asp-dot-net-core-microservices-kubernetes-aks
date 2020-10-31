@@ -4,11 +4,13 @@ on:
   push:
     branches: [ containarized_aks_allup ]
     paths:
+    - '.github/workflows/globoticket.web.yaml'
     - 'GloboTicket/GloboTicket.Client/**'
     - 'GloboTicket/aks-globoticket.web.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
     paths:
+    - '.github/workflows/globoticket.web.yaml'
     - 'GloboTicket/GloboTicket.Client/**'
     - 'GloboTicket/aks-globoticket.web.yaml'
 
