@@ -50,9 +50,19 @@ jobs:
 
     - name: Run container scanner for known vulnerabilities
       run: |
-            trivy image --exit-code 0 --severity LOW,MEDIUM  ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-            trivy image --exit-code 1 --severity HIGH,CRITICAL ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+            trivy image --exit-code 0 --severity LOW,MEDIUM --template "${{github.workspace}}/.github/workflows/sarif.tpl" -o sarif-lm.test ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+            trivy image --exit-code 1 --severity HIGH,CRITICAL --template "${{github.workspace}}/.github/workflows/sarif.tpl" -o sarif-hc.test ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
 
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'sarif-lm.test'
+    
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'sarif-hc.test'
+    
     - name: Push image to ACR
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
