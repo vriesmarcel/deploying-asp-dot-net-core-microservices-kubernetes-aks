@@ -5,7 +5,7 @@ rate: $max calls / second"
 START=$(date +%s);
 
 get () {
-  curl -s -v "$1" 2>&1 | tr '\r\n' '\\n' | awk -v date="$(date +'%r')" '{print $0"\n-----", date}' 
+  curl -v "$1" 2>&1 | tr '\r\n' '\\n' | awk -v date="$(date +'%r')" '{print $0"\n-----", date}' 
 }
 
 while true
