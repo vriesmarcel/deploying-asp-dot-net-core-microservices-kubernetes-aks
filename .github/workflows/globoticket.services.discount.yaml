@@ -49,31 +49,24 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
-    - name: Build an image from Dockerfile
+    - name:push image to ACR
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-  deploy:
 
-    runs-on: ubuntu-latest
-    env:
-      imageRepository: 'globoticket.services.discount'
-      containerRegistry: 'globoticketacr.azurecr.io'
-      dockerfilePath: 'GloboTicket/GloboTicket.Services.Discount/Dockerfile'
-      deploymentFile: 'aks-globoticket.services.discount.yaml'
+    - name: Replace tokens
+      uses: cschleiden/replace-tokens@v1.0
+      with:
+        files: ${{github.workspace}}/GloboTicket/${{env.deploymentFile}}
+      env: 
+        Build.BuildId: ${{github.run_number}}
     
-    steps:
-      - name: Replace tokens
-        uses: cschleiden/replace-tokens@v1.0
-        with:
-          files: ${{env.deploymentFile}}
-        env: 
-          Build.BuildId: ${{github.run_number}}
-      - uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{secrets.KUBECONFIG}} 
-        id: setcontext
-      - uses: Azure/k8s-deploy@v1
-        with:
-          manifests: |
-              ${{env.deploymentFile}}
+    - uses: azure/k8s-set-context@v1
+      with:
+        method: kubeconfig
+        kubeconfig: ${{secrets.KUBECONFIG}} 
+      id: setcontext
+    
+    - uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+            ${{github.workspace}}/GloboTicket/${{env.deploymentFile}}
