@@ -3,8 +3,14 @@ name: globoticket.services.payment
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Payment/**'
+    - 'GloboTicket/aks-globoticket.services.payment.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Payment/**'
+    - 'GloboTicket/aks-globoticket.services.payment.yaml'
 
 jobs:
   build:

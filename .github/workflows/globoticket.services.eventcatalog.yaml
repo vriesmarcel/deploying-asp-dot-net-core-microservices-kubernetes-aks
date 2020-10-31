@@ -3,8 +3,14 @@ name: globoticket.services.eventcatalog
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Eventcatalog/**'
+    - 'GloboTicket/aks-globoticket.services.eventcatalog.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Eventcatalog/**'
+    - 'GloboTicket/aks-globoticket.services.eventcatalog.yaml'
 
 jobs:
   build:

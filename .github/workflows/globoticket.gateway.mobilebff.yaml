@@ -3,8 +3,14 @@ name: globoticket.gateway.mobilebff
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Mobilebff/**'
+    - 'GloboTicket/aks-globoticket.services.mobilebff.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Mobilebff/**'
+    - 'GloboTicket/aks-globoticket.services.mobilebff.yaml'
 
 jobs:
   build:

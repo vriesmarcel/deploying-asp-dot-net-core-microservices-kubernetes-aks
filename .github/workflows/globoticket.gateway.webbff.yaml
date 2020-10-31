@@ -3,8 +3,14 @@ name: globoticket.gateway.webbff
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Webbff/**'
+    - 'GloboTicket/aks-globoticket.services.webbff.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Services.Webbff/**'
+    - 'GloboTicket/aks-globoticket.services.webbff.yaml'
 
 jobs:
   build:

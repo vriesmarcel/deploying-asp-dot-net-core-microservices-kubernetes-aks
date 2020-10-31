@@ -3,8 +3,14 @@ name: globoticket.web
 on:
   push:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Client/**'
+    - 'GloboTicket/aks-globoticket.web.yaml'
   pull_request:
     branches: [ containarized_aks_allup ]
+    paths:
+    - 'GloboTicket/GloboTicket.Client/**'
+    - 'GloboTicket/aks-globoticket.web.yaml'
 
 jobs:
   build:
