@@ -49,7 +49,7 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
-    - name:push image to ACR
+    - name: push image to ACR
       run: |
         docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
 
