@@ -23,7 +23,7 @@ kind: Deployment
 metadata:
   name: dep-globoticket-services-eventcatalog
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: globoticket-services-eventcatalog
