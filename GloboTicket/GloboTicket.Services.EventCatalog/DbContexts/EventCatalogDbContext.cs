@@ -1,21 +1,37 @@
 ﻿using System;
 using GloboTicket.Services.EventCatalog.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
 
 namespace GloboTicket.Services.EventCatalog.DbContexts
 {
     public class EventCatalogDbContext : DbContext
     {
-        public EventCatalogDbContext(DbContextOptions<EventCatalogDbContext> options) : base(options)
+        public bool UseSchemaV2 { get; set; }
+   
+        public EventCatalogDbContext(DbContextOptions<EventCatalogDbContext> options, IConfiguration configuration) : base(options)
         {
-
+            var version = configuration["CategorySchemaVersion"];
+            UseSchemaV2 = version.Equals("2.0");
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Event> Events { get; set; }
 
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // make the db context schema aware of new upcomming schema
+            // the moment the new schema is implemented in the database, start
+            // incorporating the new properties, untill that moment ignore them
+            if (!UseSchemaV2)
+            {
+                modelBuilder.Entity<Category>().Ignore(e => e.FromDate);
+                modelBuilder.Entity<Category>().Ignore(e => e.UntilDate);
+            }
 
             var concertGuid = Guid.Parse("{B0788D2F-8003-43C1-92A4-EDC76A7C5DDE}");
             var musicalGuid = Guid.Parse("{6313179F-7837-473A-A4D5-A5571B43E6A6}");
@@ -25,22 +41,30 @@ namespace GloboTicket.Services.EventCatalog.DbContexts
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 CategoryId = concertGuid,
-                Name = "Concerts"
+                Name = "Concerts",
+                FromDate = UseSchemaV2 ? DateTime.Now.AddDays(-10): (DateTime?)null,
+                UntilDate = UseSchemaV2 ? DateTime.Now.AddDays(-1): (DateTime?)null
             });
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 CategoryId = musicalGuid,
-                Name = "Musicals"
+                Name = "Musicals",
+                FromDate = UseSchemaV2 ? DateTime.Now.AddDays(-10) : (DateTime?)null,
+                UntilDate = UseSchemaV2 ? DateTime.Now.AddDays(20) : (DateTime?)null
             });
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 CategoryId = playGuid,
-                Name = "Plays"
+                Name = "Plays",
+                FromDate = UseSchemaV2 ? DateTime.Now.AddDays(-10) : (DateTime?)null,
+                UntilDate = UseSchemaV2 ? DateTime.Now.AddDays(20) : (DateTime?)null
             });
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 CategoryId = conferenceGuid,
-                Name = "Conferences"
+                Name = "Conferences",
+                FromDate = UseSchemaV2 ? DateTime.Now.AddDays(-10) : (DateTime?)null,
+                UntilDate = UseSchemaV2 ? DateTime.Now.AddDays(20) : (DateTime?)null
             });
 
             modelBuilder.Entity<Event>().HasData(new Event

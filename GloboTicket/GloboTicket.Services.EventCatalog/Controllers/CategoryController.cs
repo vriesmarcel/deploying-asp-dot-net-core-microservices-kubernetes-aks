@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.Services.EventCatalog.Controllers
 {
+    
     [Route("api/categories")]
+    [ApiController]
     public class CategoryController: ControllerBase
     {
         private ICategoryRepository _categoryRepository;
@@ -23,7 +25,8 @@ namespace GloboTicket.Services.EventCatalog.Controllers
         public async Task<ActionResult<IEnumerable<CategoryDto>>> Get()
         {
             var result = await _categoryRepository.GetAllCategories();
-            return Ok(_mapper.Map<List<CategoryDto>>(result));
+            var mappedResult = _mapper.Map<List<CategoryDto>>(result);
+            return Ok(mappedResult);
         }
     }
 }
