@@ -41,7 +41,7 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: CategorySchemaVersion
-          value: '1.0'
+          value: '2.0'
         - name: ConnectionStrings__DefaultConnection
           valueFrom: 
             secretKeyRef:
