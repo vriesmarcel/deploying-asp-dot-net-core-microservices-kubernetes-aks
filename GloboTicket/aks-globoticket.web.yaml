@@ -42,11 +42,26 @@ spec:
       containers:
       - name: globoticket-web
         image: globoticketacr.azurecr.io/globoticket.web:#{Build.BuildId}#
+        volumeMounts:
+        - name: certstore
+          mountPath: /https/globoticket.pfx
+          subPath: globoticket.pfx
+          readOnly: false
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_URLS
-          value: http://+:80
+          value: http://+:80;https://+:443
+        - name: base64pfxfile
+          valueFrom:
+            secretKeyRef:
+              name: base64pfxfile
+              key: file
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          valueFrom: 
+            secretKeyRef:
+              name: pfx-password
+              key: pwd
         - name: ApiConfigs__EventCatalog__Uri
           value: http://svc-globoticket-services-eventcatalog
         - name: ApiConfigs__ShoppingBasket__Uri
@@ -67,5 +82,9 @@ spec:
         resources:
           limits:
             cpu: "0.15"
+      volumes:
+        - name: certstore
+          configMap:
+            name: certstore
       imagePullSecrets:
         - name: acr-secret
