@@ -42,11 +42,6 @@ spec:
       containers:
       - name: globoticket-web
         image: globoticketacr.azurecr.io/globoticket.web:#{Build.BuildId}#
-        volumeMounts:
-        - name: certstore
-          mountPath: /https/globoticket.pfx
-          subPath: globoticket.pfx
-          readOnly: false
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
@@ -82,9 +77,5 @@ spec:
         resources:
           limits:
             cpu: "0.15"
-      volumes:
-        - name: certstore
-          configMap:
-            name: certstore
       imagePullSecrets:
         - name: acr-secret
