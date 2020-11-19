@@ -1,0 +1,69 @@
+name: globoticket.web
+
+on:
+  push:
+    branches: [ containarized_aks_allup ]
+    paths:
+    - '.github/workflows/globoticket.web.yaml'
+    - 'GloboTicket/GloboTicket.Client/**'
+    - 'GloboTicket/aks-globoticket.web.yaml'
+  pull_request:
+    branches: [ containarized_aks_allup ]
+    paths:
+    - '.github/workflows/globoticket.web.yaml'
+    - 'GloboTicket/GloboTicket.Client/**'
+    - 'GloboTicket/aks-globoticket.web.yaml'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      imageRepository: 'globoticket.web'
+      containerRegistry: 'globoticketacr.azurecr.io'
+      dockerfilePath: 'GloboTicket/GloboTicket.Client/Dockerfile'
+      deploymentFile: 'aks-globoticket.web.yaml'
+      trivyVersion: 0.12.0
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        registry: ${{ env.containerRegistry }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_TOKEN }}
+    
+    - name: Build an image from Dockerfile
+      run: |
+        docker build -t ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}} -f ${{env.dockerfilePath}} ${{github.workspace}}/GloboTicket
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+        format: 'table'
+        exit-code: 0
+
+    - name: Push image to ACR
+      run: |
+        docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+    
+    - name: Replace tokens
+      uses: cschleiden/replace-tokens@v1.0
+      with:
+        files: ${{github.workspace}}/GloboTicket/${{env.deploymentFile}}
+      env: 
+        Build.BuildId: ${{github.run_number}}
+    - uses: azure/k8s-set-context@v1
+      with:
+        method: kubeconfig
+        kubeconfig: ${{secrets.KUBECONFIG}} 
+      id: setcontext
+    - uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+            ${{github.workspace}}/GloboTicket/${{env.deploymentFile}}
