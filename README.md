@@ -12,6 +12,22 @@ GloboTicket is a sample ASP.NET Core Microservices application that you can lear
 - Implementing cross-cutting concerns for ASP.NET Core microservices
 - Strategies for Microservice Scalability and Availability in ASP.NET Core
 
+### Which branch contains what?
+This repo contains many branches. Each branch corresponds to on eof the demos given in the course. To enable you to follow allong the demos yourself, you can switch to a specific branch for each of the demos. The following demo corresponds to the following branch:
+
+Demo 1, Module 2 -> branch before_containarized_docer_compose
+Demo 2, module 2 -> branch containarized_docer_compose
+
+Demo 2, Module 3 -> Branch create_acr_and_push
+Demo 3, Module 3 -> Branch create_acr_and_push
+Demo 4, Module 3 -> Branch zero_downtime_with_probes
+
+Demo 1, Module 4 -> Branch containarized_allup
+Demo 2, Module 4 -> Branch containarized_allup
+
+Demo 1, Module 5 -> Branch zero_downtime_dbchange
+Demo 2, Module 5 -> Branch zero_downtime_dbchange
+
 ### Prerequisites
 
 In order to build and run the sample GloboTicket application, it is recommended that you have the following installed.
