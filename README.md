@@ -15,8 +15,8 @@ GloboTicket is a sample ASP.NET Core Microservices application that you can lear
 ### Which branch contains what?
 This repo contains many branches. Each branch corresponds to on eof the demos given in the course. To enable you to follow allong the demos yourself, you can switch to a specific branch for each of the demos. The following demo corresponds to the following branch:
 
-Demo 1, Module 2 -> branch before_containarized_docer_compose
-Demo 2, module 2 -> branch containarized_docer_compose
+Demo 1, Module 2 -> branch before_containarized_docker_compose
+Demo 2, module 2 -> branch containarized_docker_compose
 
 Demo 2, Module 3 -> Branch create_acr_and_push
 Demo 3, Module 3 -> Branch create_acr_and_push
